@@ -1,0 +1,27 @@
+$theme-colors: (
+    "primary": #882d30,
+    "secondary": #818181,
+    "success": #2d7549,
+    "danger": #b37e2e,
+    "info": #27526d,
+    "warning": #49a7aa,
+    "light": #ecececaf,
+    "dark": #222222b0,
+);
+
+$body-bg: #091a28;
+$body-color: #767676;
+$spacer: 1rem;
+$border-width: 1px;
+$btn-border-radius: 0;
+$enable-rounded: false;
+$enable-shadows: false;
+$enable-gradients: false;
+$input-focus-border-color: #222222;
+$input-bg: #636363;
+
+// Import Bootstrap source files from node_modules
+@import '~bootstrap/scss/bootstrap.scss';
+@import "~bootstrap-vue/src/index.scss";
+
+@import 'sentinel.scss';
