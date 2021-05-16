@@ -9,6 +9,7 @@
         v-if="authenticated"
       ></b-navbar-toggle>
       <b-collapse id="nav-text-collapse" is-nav v-if="authenticated">
+        <h1>yay</h1>
         <s-dropdown
           v-for="item in resources"
           :key="item.text"
@@ -16,6 +17,14 @@
           :to="item.to"
           :items="item.items"
         />
+        <b-navbar-nav class="ml-auto" right>
+          <b-nav-item to="/password">
+            <font-awesome-icon icon="key" />
+          </b-nav-item>
+          <b-nav-item v-on:click="logout">
+            <font-awesome-icon icon="sign-out-alt" />
+          </b-nav-item>
+        </b-navbar-nav>
       </b-collapse>
       <b-navbar-nav class="ml-auto" right>
         <b-nav-item v-on:click="toggleTheme">
@@ -51,8 +60,8 @@ import map from "./navigation-map";
 export default {
   data() {
     return {
-      resources: []
-    }
+      resources: [],
+    };
   },
   components: {
     "s-dropdown": Dropdown,
@@ -81,8 +90,9 @@ export default {
       this.$store.dispatch("toggleTheme");
     },
   },
-  mounted() {
-      const result = [];
+  watch: {
+    "$store.state.authenticated": function () {
+      const self = this;
 
       map.forEach((item) => {
         var add = false;
@@ -108,7 +118,7 @@ export default {
           }
 
           if (add) {
-            result.push({
+            self.resources.push({
               text: item.text,
               to: item.to || "",
               items: list,
@@ -116,8 +126,7 @@ export default {
           }
         }
       });
-
-      return result;
-  }
+    },
+  },
 };
 </script>
