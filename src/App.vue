@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <s-navigation />
-    <div style="top: 5em; position: absolute">
-    </div>
+    <div style="top: 5em; position: absolute"></div>
     <s-alerts :alerts="alerts" v-on:removed="removeAlert" class="m-2" />
     <s-working v-if="starting" />
     <div class="container-fluid">
@@ -16,10 +15,18 @@
       <div class="container-fluid text-center">
         <div v-if="debugging">
           <div class="d-none d-xl-block font-weight-bold">X-LARGE (XL)</div>
-          <div class="d-none d-lg-block d-xl-none font-weight-bold">LARGE (LG)</div>
-          <div class="d-none d-md-block d-lg-none font-weight-bold">MEDIUM (M)</div>
-          <div class="d-none d-sm-block d-md-none font-weight-bold">SMALL (SM)</div>
-          <div class="d-block d-sm-none alert font-weight-bold">X-SMALL (Default)</div>
+          <div class="d-none d-lg-block d-xl-none font-weight-bold">
+            LARGE (LG)
+          </div>
+          <div class="d-none d-md-block d-lg-none font-weight-bold">
+            MEDIUM (M)
+          </div>
+          <div class="d-none d-sm-block d-md-none font-weight-bold">
+            SMALL (SM)
+          </div>
+          <div class="d-block d-sm-none alert font-weight-bold">
+            X-SMALL (Default)
+          </div>
         </div>
         <p class="m-0">Copyright (c) 2020 Sentinel</p>
       </div>
@@ -39,7 +46,7 @@ export default {
     };
   },
   components: {
-    "s-navigation": Navigation
+    "s-navigation": Navigation,
   },
   computed: {
     debugging() {
@@ -50,7 +57,7 @@ export default {
     },
     starting() {
       return this.$store.state.starting;
-    }
+    },
   },
   methods: {
     removeAlert(alert) {
@@ -58,30 +65,18 @@ export default {
     },
   },
   mounted() {
-    // set 'app-background' class to body
-    let bodyElement = document.body;
-    bodyElement.classList.add("app-background");
+    document.body.classList.add("app-background");
 
-    // check for active theme
-    let theme = localStorage.getItem("theme");
+    let theme = localStorage.getItem("theme") || "dark";
 
-    if (theme === "default") {
-      this.$store.commit("THEME_DEFAULT");
-    } else {
-      this.$store.commit("THEME_DARK");
-    }
+    this.$store.commit("APPLY_THEME", {
+      theme,
+    });
   },
   watch: {
-    '$store.state.theme': function () {
-      let htmlElement = document.documentElement;
-
-      if (this.$store.state.theme == "default") {
-        localStorage.setItem("theme", "default");
-        htmlElement.setAttribute("theme", "default");
-      } else {
-        localStorage.setItem("theme", "dark");
-        htmlElement.setAttribute("theme", "dark");
-      }
+    "$store.state.theme": function () {
+      localStorage.setItem("theme", this.$store.state.theme);
+      document.documentElement.setAttribute("theme", this.$store.state.theme);
     },
   },
 };

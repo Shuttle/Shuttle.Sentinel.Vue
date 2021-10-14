@@ -1,7 +1,7 @@
 const configuration = {
-    url: process.env.VUE_APP_URL,
-    accessUrl: process.env.VUE_APP_ACCESS_URL,
-    environment: process.env.VUE_APP_ENVIRONMENT,
+    url: `${global.settings.API_URL}${global.settings.API_URL.endsWith("/") ? "" : "/"}`,
+    accessUrl: `${global.settings.ACCESS_API_URL}${global.settings.ACCESS_API_URL.endsWith("/") ? "" : "/"}`,
+    environment: (global.settings.NODE_ENV || 'development'),
 
     oauth: {
         development: {

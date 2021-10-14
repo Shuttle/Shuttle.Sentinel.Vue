@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import Alerts from './alerts';
 import access from './access';
 import api from './api';
-import router from './router';
+import router from './router'
 
 Vue.use(Vuex);
 
@@ -14,7 +14,7 @@ export default new Vuex.Store({
         alerts: new Alerts(),
         authenticated: false,
         secondaryNavbarItems: [],
-        theme: localStorage.getItem('theme')
+        theme: localStorage.getItem('theme') || 'dark'
     },
     getters: {
         authenticated: state => {
@@ -45,22 +45,15 @@ export default new Vuex.Store({
         CLEAR_SECONDARY_NAVBAR_ITEMS: (state) => {
             state.secondaryNavbarItems = [];
         },
-        THEME_DARK: (state) => {
-            if (state.theme === "dark") {
+        APPLY_THEME: (state, { theme }) => {
+            if (state.theme === theme) {
                 return;
             }
 
-            state.theme = "dark";
+            state.theme = theme;
+
             router.go();
         },
-        THEME_DEFAULT: (state) => {
-            if (state.theme === "default") {
-                return;
-            }
-
-            state.theme = "default";
-            router.go();
-        }
     },
     actions: {
         login({ commit }, payload) {
@@ -104,11 +97,17 @@ export default new Vuex.Store({
             commit('CLEAR_SECONDARY_NAVBAR_ITEMS');
         },
         toggleTheme({ commit }) {
-            if (this.state.theme === "dark") {
-                commit('THEME_DEFAULT');
+            let theme = this.state.theme;
+            
+            if (theme === "dark"){
+                theme = "light";
             } else {
-                commit('THEME_DARK');
+                theme = "dark";
             }
+
+            commit('APPLY_THEME', {
+                theme
+            });
         },
     }
 })

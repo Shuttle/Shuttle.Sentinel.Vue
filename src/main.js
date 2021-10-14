@@ -29,40 +29,40 @@ Vue.prototype.$api = api;
 Vue.prototype.$access = access;
 
 var vue = new Vue({
-  store,
-  router,
-  i18n,
-  access,
-  render: h => h(App),
+    store,
+    router,
+    i18n,
+    access,
+    render: h => h(App),
 }).$mount('#app');
 
-if (vue.$store.state.theme === "default") {
-  require("@/assets/bootstrap.scss");
+if (vue.$store.state.theme === "dark") {
+    require("@/assets/bootstrap-dark.scss");
 } else {
-  require("@/assets/bootstrap-dark.scss");
+    require("@/assets/bootstrap-light.scss");
 }
 
 access.initialize()
-  .then(() => {
-    if (access.loginStatus === 'logged-in') {
-      store.commit('AUTHENTICATED');
-    }
-  })
-  .catch(function () {
-    store.dispatch('addAlert', {
-      message: i18n.t('exceptions.access-failure'),
-      type: 'danger',
-      expire: false
-    });
-  })
-  .finally(function () {
-    store.commit('STARTED');
+    .then(() => {
+        if (access.loginStatus === 'logged-in') {
+            store.commit('AUTHENTICATED');
+        }
+    })
+    .catch(function () {
+        store.dispatch('addAlert', {
+            message: i18n.t('exceptions.access-failure'),
+            type: 'danger',
+            expire: false
+        });
+    })
+    .finally(function () {
+        store.commit('STARTED');
 
-    if (window.location.pathname !== "/") {
-      router.push({ path: window.location.pathname + window.location.search});
-    } else {
-      if (access.loginStatus !== 'logged-in') {
-        router.push({ path: "/login" });
-      }
-    }
-  });
+        if (window.location.pathname !== "/") {
+            router.push({ path: window.location.pathname + window.location.search });
+        } else {
+            if (access.loginStatus !== 'logged-in') {
+                router.push({ path: "/login" });
+            }
+        }
+    });

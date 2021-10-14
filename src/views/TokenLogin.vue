@@ -4,7 +4,6 @@
       class="text-center"
       :header="$t('token-login')"
       :lead="message"
-      bg-variant="light"
       :text-variant="variant"
     >
       <s-working v-if="working" />

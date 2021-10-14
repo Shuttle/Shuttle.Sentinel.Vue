@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" fixed="top">
+    <b-navbar toggleable="lg" fixed="top" type="">
       <b-navbar-brand href="#">
         <img src="@/assets/logo.png" alt="Sentinel logo" />
       </b-navbar-brand>
@@ -77,7 +77,7 @@ export default {
       return this.$store.getters.secondaryNavbarItems;
     },
     themeIcon() {
-      return this.$store.getters.theme === "default" ? "moon" : "sun";
+      return this.$store.getters.theme === "light" ? "moon" : "sun";
     },
   },
   methods: {
