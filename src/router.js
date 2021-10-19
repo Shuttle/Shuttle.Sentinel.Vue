@@ -104,13 +104,13 @@ router.beforeEach(async (to, from, next) => {
     if ((to.meta.permission || to.meta.requiresAuthentication) && access.loginStatus !== "logged-in") {
         router.push({ path: "/login" });
     } else if (to.fullPath === "/login" && access.loginStatus === "logged-in") {
-        router.push({ path: "/search" });
+        router.push({ path: "/dashboard" });
     } else if ((to.meta.permission && !access.hasPermission(to.meta.permission))) {
         store.dispatch("addAlert", {
             message: i18n.t("permission-required"),
         });
 
-        router.push({ path: "/search" });
+        router.push({ path: "/dashboard" });
     }
     else {
         return next();
