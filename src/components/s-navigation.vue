@@ -9,7 +9,6 @@
         v-if="authenticated"
       ></b-navbar-toggle>
       <b-collapse id="nav-text-collapse" is-nav v-if="authenticated">
-        <h1>yay</h1>
         <s-dropdown
           v-for="item in resources"
           :key="item.text"
@@ -54,6 +53,7 @@
 <script>
 import access from "../access";
 import router from "../router";
+import i18n from '../i18n'
 import Dropdown from "./s-dropdown.vue";
 import map from "./navigation-map";
 
@@ -109,7 +109,7 @@ export default {
 
                 list.push({
                   to: subitem.to,
-                  text: subitem.text,
+                  text: i18n.t(subitem.text),
                 });
               }
             });
@@ -119,7 +119,7 @@ export default {
 
           if (add) {
             self.resources.push({
-              text: item.text,
+              text: i18n.t(item.text),
               to: item.to || "",
               items: list,
             });

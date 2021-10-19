@@ -10,6 +10,7 @@ var Permissions = {
     View: {
         Dashboard: 'sentinel://dashboard/view',
         DataStores: 'sentinel://data-stores/view',
+        Monitoring: 'sentinel://monitoring/view',
         Queues: 'sentinel://queues/view',
         Schedules: 'sentinel://schedules/view',
         Subscriptions: 'sentinel://subscriptions/view'

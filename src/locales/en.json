@@ -1,27 +1,19 @@
 {
-    "abbreviation": "Abbreviation",
-    "alias": "Alias",
-    "abstract": "Abstract",
-    "acronym": "Acronym",
+    "assembly-qualified-name": "Assembly qualified name",
+    "base-directory": "Base directory",
     "cancel": "Cancel",
-    "country": "Country",
     "dashboard": "Dashboard",
-    "display": "Display",
-    "discipline": "Discipline",
     "email-address": "E-mail address",
-    "forgot-password": "Forgot Password",
-    "frequency": "Frequency",
-    "inclusion-date": "Inclusion date",
-    "issn": "ISSN",
-    "list": "List",
-    "list-information": "List Information",
-    "lists": "Lists",
-    "list-type": "List type",
+    "endpoints": "Endpoints",
+    "forgot-password": "Forgot password",
+    "heartbeat-date": "Heartbeat date",
+    "heartbeat-interval": "Heartbeat interval",
+    "ipv4-address": "IPv4 address",
     "login": "Login",
+    "machine-name": "Machine name",
     "name": "Name",
     "new-password": "New password",
     "new-password-confirm": "New password (confirm)",
-    "notes": "Notes",
     "old-password": "Old password",
     "password": "Password",
     "password-mismatch": "Your new password does not match the confirmation password",
@@ -32,21 +24,13 @@
     "profile-activating": "Please hold on while we activate your profile.",
     "profile-activated": "Your profile has been successfully activated.",
     "profile-activation-failed": "Your profile could not be activated: {0}",
-    "publisher": "Publisher",
     "register": "Register",
     "register-provider": "Register using",
-    "release-date": "Release date",
-    "report": "Report",
     "reset-password": "Reset Password",
-    "scope": "Scope",
     "search": "Search",
-    "search-titles": "Search Titles",
     "send": "Send",
     "status": "Status",
     "submit": "Submit",
-    "submit-holding": "Submit Holding",
-    "submit-references": "Submit References",
-    "title": "Title",
     "token-login": "Login",
     "token-login-working": "Please hang on a while the system logs you in.",
     "token-login-successful": "You have been successfully logged in.",
@@ -73,5 +57,32 @@
     "validation": {
         "required": "May not be empty.",
         "email": "Must be an e-mail address."
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "endpoints": "Endpoints",
+        "message-types": {
+            "title": "Message types",
+            "associations": "Associations",
+            "dispatched": "Dispatched",
+            "handled": "Handled"
+        },
+        "messages": {
+            "title": "Messages",
+            "manage": "Manage",
+            "send": "Send",
+            "headers": "Headers"
+        },
+        "subscriptions": "Subscriptions",
+        "data-stores": "Data stores",
+        "queues": "Queues",
+        "schedules": "Schedules"
+    },
+    "statuses": {
+        "health": {
+            "up": "Up",
+            "down": "Down",
+            "recovery": "Recovery"
+        }
     }
 }

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import access from './access';
 import store from './store';
 import i18n from './i18n';
+import Permissions from './permissions';
 
 Vue.use(Router)
 
@@ -11,27 +12,22 @@ const router = new Router({
     base: process.env.BASE_URL,
     routes: [
         {
-            path: "/",
-            name: "landing",
-            component: () => import(/* webpackChunkName: "landing" */ "./views/Landing.vue")
-        },
-        {
             path: "/dashboard",
             name: "dashboard",
             component: () => import(/* webpackChunkName: "dashboard" */ "./views/Dashboard.vue")
         },
         {
-            path: "/list",
-            name: "list",
-            component: () => import(/* webpackChunkName: "list" */ "./views/List.vue"),
+            path: "/endpoints",
+            name: "endpoints",
+            component: () => import(/* webpackChunkName: "endpoints" */ "./views/Endpoints.vue"),
             meta: {
-                permission: "Sentinel://lists/manage"
+                permission: Permissions.Manage.Monitoring
             }
         },
         {
             path: "/lists",
             name: "lists",
-            component: () => import(/* webpackChunkName: "lists" */ "./views/Lists.vue")
+            component: () => import(/* webpackChunkName: "lists" */ "./views/Endpoints.vue")
         },
         {
             path: "/login",
