@@ -92,7 +92,8 @@
         "health": {
             "up": "Up",
             "down": "Down",
-            "recovery": "Recovery"
+            "recovery": "Recovery",
+            "unknown": "Unknown"
         }
     },
     "confirmation-remove": {

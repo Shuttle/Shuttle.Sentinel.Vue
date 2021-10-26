@@ -18,23 +18,34 @@
       <template #table-busy>
         <s-working />
       </template>
-      <template #cell(status)="row">
-        <b-badge :variant="heartbeatStatusVariant(row.heartbeatStatus)">{{
-          heartbeatStatusText(row.heartbeatStatus)
-        }}</b-badge>
+      <template v-slot:cell(status)="data">
+        <b-badge pill :variant="heartbeatStatusVariant(data.item.heartbeatStatus)">{{heartbeatStatusText(data.item.heartbeatStatus)}}</b-badge>
       </template>
       <template v-slot:cell(remove)="data">
         <b-button
           variant="outline-danger"
           v-b-modal.modal-confirmation
           size="sm"
-          @click="selectRole(data.item)"
+          @click="selectItem(data.item)"
           :disabled="!$access.hasPermission('sentinel://monitoring/manage')"
         >
           <font-awesome-icon icon="trash-alt" />
         </b-button>
       </template>
     </b-table>
+    <b-modal
+      id="modal-confirmation"
+      :title="$t('confirmation-remove.title')"
+      button-size="sm"
+      :ok-title="$t('ok')"
+      :cancel-title="$t('cancel')"
+      @ok="remove"
+    >
+      <template v-slot:modal-header-close>
+        <font-awesome-icon icon="times" />
+      </template>
+      <p>{{ $t("confirmation-remove.message") }}</p>
+    </b-modal>
   </div>
 </template>
 
@@ -49,8 +60,19 @@ export default {
     };
   },
   methods: {
+    selectItem(item) {
+      this.selectedItem = item;
+    },
+    remove() {
+      const self = this;
+
+      this.$api.delete("endpoints/" + self.selectedItem.id).then(function () {
+        self.$store.dispatch("requestSent");
+        self.refresh();
+      });
+    },
     heartbeatStatusText(status) {
-      this.$i18n.t(`statuses.heatlh.${status}`);
+      return this.$i18n.t(`statuses.health.${status}`);
     },
     heartbeatStatusVariant(status) {
       switch (status) {
@@ -114,6 +136,7 @@ export default {
       },
       {
         label: this.$i18n.t("remove"),
+        key: "remove"
       },
     ];
 
