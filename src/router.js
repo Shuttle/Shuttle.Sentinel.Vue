@@ -17,17 +17,28 @@ const router = new Router({
             component: () => import(/* webpackChunkName: "dashboard" */ "./views/Dashboard.vue")
         },
         {
+            path: "/datastores",
+            name: "datastores",
+            component: () => import(/* webpackChunkName: "datastores" */ "./views/DataStores.vue"),
+            meta: {
+                permission: Permissions.View.DataStores
+            }
+        },
+        {
+            path: "/datastore",
+            name: "datastore",
+            component: () => import(/* webpackChunkName: "datastore" */ "./views/DataStore.vue"),
+            meta: {
+                permission: Permissions.Manage.DataStores
+            }
+        },
+        {
             path: "/endpoints",
             name: "endpoints",
             component: () => import(/* webpackChunkName: "endpoints" */ "./views/Endpoints.vue"),
             meta: {
-                permission: Permissions.Manage.Monitoring
+                permission: Permissions.View.Monitoring
             }
-        },
-        {
-            path: "/lists",
-            name: "lists",
-            component: () => import(/* webpackChunkName: "lists" */ "./views/Endpoints.vue")
         },
         {
             path: "/login",
@@ -38,22 +49,6 @@ const router = new Router({
             path: "/register",
             name: "register",
             component: () => import(/* webpackChunkName: "register" */ "./views/Register.vue")
-        },
-        {
-            path: "/report",
-            name: "report",
-            component: () => import(/* webpackChunkName: "report" */ "./views/Report.vue"),
-            meta: {
-                requiresAuthentication: true
-            }
-        },
-        {
-            path: "/search",
-            name: "search",
-            component: () => import(/* webpackChunkName: "search" */ "./views/Search.vue"),
-            meta: {
-                requiresAuthentication: true
-            }
         },
         {
             path: "/profile",
@@ -90,7 +85,23 @@ const router = new Router({
             meta: {
                 requiresAuthentication: true
             }
-        }
+        },
+        {
+            path: "/queues",
+            name: "queues",
+            component: () => import(/* webpackChunkName: "queues" */ "./views/Queues.vue"),
+            meta: {
+                permission: Permissions.View.Queues
+            }
+        },
+        {
+            path: "/queue",
+            name: "queue",
+            component: () => import(/* webpackChunkName: "queue" */ "./views/Queue.vue"),
+            meta: {
+                permission: Permissions.View.Queues
+            }
+        },
     ]
 })
 

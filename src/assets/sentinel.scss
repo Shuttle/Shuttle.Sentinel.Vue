@@ -1,11 +1,19 @@
 body {
     font-family: Roboto, sans-serif, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-    margin: 90px 0px;
+    margin: 8rem 0px;
     font-weight: 300;
 }
 
 .navbar-brand > img {
     height: 50px;
+}
+
+.navbar {
+    background-color: $navbar-bg-color;
+}
+
+.navbar-secondary {
+    background-color: lighten($navbar-bg-color, 2%);
 }
 
 .footer {
@@ -21,7 +29,6 @@ body {
 }
 
 #app .navbar {
-    min-height: 4rem;
     font-size: .8em;
     letter-spacing: 1px;
     font-weight: 500;
@@ -36,9 +43,9 @@ body {
 
 .s-title {
     color: var(--s-title-color);
-    border-bottom: solid 1px #ccc!important;
-    letter-spacing: 2px;
+    border-bottom: solid 1px $gray-600!important;
     margin-bottom: 1em;
+    font-size: 1.2em
 }
 
 .s-working {
@@ -69,3 +76,14 @@ body {
     margin-bottom: 15px;
     cursor: pointer;
 }
+
+.custom-select {
+    background-color: $input-bg !important;
+    border-color: $input-border-color !important;
+    color: $input-color;
+}
+
+.modal-backdrop {
+    background-color:  rgba($black, 0.6);
+}
+

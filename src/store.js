@@ -4,6 +4,7 @@ import Alerts from './alerts';
 import access from './access';
 import api from './api';
 import router from './router'
+import i18n from './i18n';
 
 Vue.use(Vuex);
 
@@ -86,9 +87,18 @@ export default new Vuex.Store({
         addAlert({ commit }, alert) {
             commit('ADD_ALERT', alert);
         },
+        requestSent({ commit }) {
+            commit('ADD_ALERT', {
+                message: i18n.t("messages.request-sent"),
+            });
+        },
         addSecondaryNavbarItem({ commit }, item) {
             if (!item.click || typeof item.click !== "function") {
                 throw new Error("Secondary navbar item does not have a 'click' method defined.")
+            }
+
+            if (item.permission && !access.hasPermission(item.permission)) {
+                return;
             }
 
             commit('ADD_SECONDARY_NAVBAR_ITEM', item);
@@ -98,8 +108,8 @@ export default new Vuex.Store({
         },
         toggleTheme({ commit }) {
             let theme = this.state.theme;
-            
-            if (theme === "dark"){
+
+            if (theme === "dark") {
                 theme = "light";
             } else {
                 theme = "dark";

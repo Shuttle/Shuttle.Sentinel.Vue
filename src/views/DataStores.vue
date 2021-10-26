@@ -1,6 +1,6 @@
 <template>
   <div>
-    <s-title :text="$t('endpoints')" />
+    <s-title :text="$t('data-stores')" />
     <b-table
       class="mt-2"
       :items="items"
@@ -23,13 +23,22 @@
           heartbeatStatusText(row.heartbeatStatus)
         }}</b-badge>
       </template>
+      <template v-slot:cell(clone)="data">
+        <b-button
+          variant="outline-primary"
+          @click="clone(data.item)"
+          size="sm"
+          :disabled="!$access.hasPermission('sentinel://data-stores/manage')"
+          ><font-awesome-icon icon="clone"
+        /></b-button>
+      </template>
       <template v-slot:cell(remove)="data">
         <b-button
           variant="outline-danger"
           v-b-modal.modal-confirmation
           size="sm"
           @click="selectRole(data.item)"
-          :disabled="!$access.hasPermission('sentinel://monitoring/manage')"
+          :disabled="!$access.hasPermission('sentinel://data-stores/manage')"
         >
           <font-awesome-icon icon="trash-alt" />
         </b-button>
@@ -39,8 +48,11 @@
 </template>
 
 <script>
+import Permissions from "../permissions";
+import router from "../router";
+
 export default {
-  name: "Endpoints",
+  name: "DataStores",
   data() {
     return {
       items: [],
@@ -49,29 +61,13 @@ export default {
     };
   },
   methods: {
-    heartbeatStatusText(status) {
-      this.$i18n.t(`statuses.heatlh.${status}`);
-    },
-    heartbeatStatusVariant(status) {
-      switch (status) {
-        case "up": {
-          return "success";
-        }
-        case "down": {
-          return "danger";
-        }
-        default: {
-          return "warning";
-        }
-      }
-    },
     refresh() {
       const self = this;
 
       this.working = true;
 
       self.$api
-        .get("endpoints")
+        .get("datastores")
         .then(function (response) {
           self.items = response.data;
         })
@@ -85,35 +81,24 @@ export default {
 
     this.fields = [
       {
-        label: this.$i18n.t("status"),
-        key: "status",
+        label: this.$i18n.t("clone"),
+        key: "clone"
       },
       {
-        label: this.$i18n.t("machine-name"),
-        key: "machineName",
+        label: this.$i18n.t("name"),
+        key: "name",
       },
       {
-        label: this.$i18n.t("base-directory"),
-        key: "baseDirectory",
+        label: this.$i18n.t("connection-string"),
+        key: "connectionString",
       },
       {
-        label: this.$i18n.t("assembly-qualified-name"),
-        key: "assemblyQualifiedName",
-      },
-      {
-        label: this.$i18n.t("ipv4-address"),
-        key: "ipv4Address",
-      },
-      {
-        label: this.$i18n.t("heartbeat-date"),
-        key: "heartbeatDate",
-      },
-      {
-        label: this.$i18n.t("heartbeat-interval"),
-        key: "heartbeatInterval",
+        label: this.$i18n.t("provider-name"),
+        key: "providerName",
       },
       {
         label: this.$i18n.t("remove"),
+        key: "remove"
       },
     ];
 
@@ -121,6 +106,14 @@ export default {
       icon: "sync-alt",
       click() {
         self.refresh();
+      },
+    });
+
+    this.$store.dispatch("addSecondaryNavbarItem", {
+      permission: Permissions.Manage.DataStores,
+      icon: "plus-square",
+      click() {
+        router.replace("/datastore");
       },
     });
 

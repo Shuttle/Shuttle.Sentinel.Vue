@@ -2,6 +2,10 @@
     "assembly-qualified-name": "Assembly qualified name",
     "base-directory": "Base directory",
     "cancel": "Cancel",
+    "clone": "Clone",
+    "connection-string": "Connection string",
+    "data-stores": "Data stores",
+    "data-store": "Data store",
     "dashboard": "Dashboard",
     "email-address": "E-mail address",
     "endpoints": "Endpoints",
@@ -15,6 +19,7 @@
     "new-password": "New password",
     "new-password-confirm": "New password (confirm)",
     "old-password": "Old password",
+    "ok": "Ok",
     "password": "Password",
     "password-mismatch": "Your new password does not match the confirmation password",
     "password-confirm": "Password (confirm)",
@@ -24,8 +29,12 @@
     "profile-activating": "Please hold on while we activate your profile.",
     "profile-activated": "Your profile has been successfully activated.",
     "profile-activation-failed": "Your profile could not be activated: {0}",
+    "processor": "Processor",
+    "provider-name": "Provider name",
+    "queues": "Queues",
     "register": "Register",
     "register-provider": "Register using",
+    "remove": "Remove",
     "reset-password": "Reset Password",
     "search": "Search",
     "send": "Send",
@@ -37,6 +46,7 @@
     "token-login-failed": "You could not be logged in.  Please try again.",
     "type": "Type",
     "url": "URL",
+    "uri": "URI",
     "username": "Username",
     "user-required": "No users have been registered.  You will be registered as an administrator.",
     "view": "View",
@@ -84,5 +94,9 @@
             "down": "Down",
             "recovery": "Recovery"
         }
+    },
+    "confirmation-remove": {
+        "title": "Confirmation",
+        "message": "Are you sure that you want to remove the selected item?"
     }
 }

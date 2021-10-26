@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-navbar toggleable="lg" fixed="top" type="">
+  <div class="fixed-top">
+    <b-navbar toggleable="lg" type="">
       <b-navbar-brand href="#">
         <img src="@/assets/logo.png" alt="Sentinel logo" />
       </b-navbar-brand>
@@ -32,8 +32,8 @@
       </b-navbar-nav>
     </b-navbar>
     <b-navbar
-      type="dark"
-      class="navbar-secondary"
+      type=""
+      class="navbar-secondary pt-0 py-2"
       v-if="hasSecondaryNavbarItems"
     >
       <b-nav-form>
@@ -41,7 +41,7 @@
           v-for="item in secondaryNavbarItems"
           :key="item.key"
           :variant="!!item.variant ? item.variant : 'outline-secondary'"
-          class="mr-2"
+          class="mr-2 btn-sm"
           @click="item.click"
           ><font-awesome-icon v-if="!!item.icon" :icon="item.icon"
         /></b-button>

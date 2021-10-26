@@ -11,6 +11,8 @@ $warning: #0de2ea;
 $light: #e8e8e8;
 $dark: #000000;
 
+$navbar-bg-color: #161b22;
+
 /*! Import Bootstrap 4 variables */
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
@@ -28,17 +30,19 @@ $body-color: #b6b6b6;
 $link-color: $body-color;
 $link-hover-color: darken($link-color, 20%);
 $font-size-base: 1.1rem;
-$table-color: farken($body-color, 5%);
+$table-color: darken($body-color, 5%);
 $table-accent-bg: lighten($body-bg, 7.5%);
 $table-bg: lighten($body-bg, 5%);
 $table-hover-bg: rgba($white, 0.075);
 $table-border-color: rgba($white, 0.3);
-$table-dark-border-color: $table-border-color;
-$table-dark-color: $white;
+$table-border-color: $table-border-color;
+$table-color: $gray-500;
+$table-hover-color: $white;
 $input-bg: $gray-300;
 $input-disabled-bg: rgba(204, 204, 204, 0);
-$input-focus-bg: #444444;
-$input-focus-color: $body-color;
+$input-focus-bg: $gray-800 !important;
+$input-focus-color: rgba($white, 0.1);
+$input-color: rgba($white, 0.5) !important;
 $input-border-color: $gray-300;
 $dropdown-bg: $gray-800;
 $dropdown-divider-bg: rgba($black, 0.15);
@@ -49,9 +53,6 @@ $nav-tabs-border-color: rgba($white, 0.3);
 $nav-tabs-link-hover-border-color: $nav-tabs-border-color;
 $nav-tabs-link-active-bg: transparent;
 $nav-tabs-link-active-border-color: $nav-tabs-border-color;
-$navbar-dark-hover-color: $white;
-$navbar-light-hover-color: $gray-800;
-$navbar-light-active-color: $gray-800;
 $pagination-color: $white;
 $pagination-bg: transparent;
 $pagination-border-color: rgba($black, 0.6);
@@ -95,7 +96,6 @@ $scrollbar-thumb-bg: #686868;
 }
 
 .navbar {
-    background-color: #161b22;
     font-size: 14px;
 }
 
@@ -161,3 +161,8 @@ div.highlight button:active {
     border: 1px solid #343434;
     background-color: rgb(75, 75, 75);
 }
+
+.modal-footer {
+    border-top: 1px solid #333;
+}
+

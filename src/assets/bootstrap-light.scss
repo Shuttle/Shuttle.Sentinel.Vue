@@ -25,6 +25,8 @@ $link-color: $body-color;
 $scrollbar-bg: #c1c1c1;
 $scrollbar-thumb-bg: #f1f1f1;
 
+$navbar-bg-color: #ddd;
+
 // Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap.scss';
 @import 'sentinel.scss';
@@ -104,3 +106,4 @@ div.highlight button:active {
     border: 1px solid #343434;
     background-color: #eee;
 }
+
