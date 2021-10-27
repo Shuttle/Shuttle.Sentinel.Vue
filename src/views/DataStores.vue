@@ -37,13 +37,26 @@
           variant="outline-danger"
           v-b-modal.modal-confirmation
           size="sm"
-          @click="selectRole(data.item)"
+          @click="selectItem(data.item)"
           :disabled="!$access.hasPermission('sentinel://data-stores/manage')"
         >
           <font-awesome-icon icon="trash-alt" />
         </b-button>
       </template>
     </b-table>
+    <b-modal
+      id="modal-confirmation"
+      :title="$t('confirmation-remove.title')"
+      button-size="sm"
+      :ok-title="$t('ok')"
+      :cancel-title="$t('cancel')"
+      @ok="remove"
+    >
+      <template v-slot:modal-header-close>
+        <font-awesome-icon icon="times" />
+      </template>
+      <p>{{ $t("confirmation-remove.message") }}</p>
+    </b-modal>
   </div>
 </template>
 
@@ -61,6 +74,20 @@ export default {
     };
   },
   methods: {
+    clone(item) {
+      router.replace("/datastore/" + item.id);
+    },
+    selectItem(item) {
+      this.selectedItem = item;
+    },
+    remove() {
+      const self = this;
+
+      this.$api.delete("datastores/" + self.selectedItem.id).then(function () {
+        self.$store.dispatch("requestSent");
+        self.refresh();
+      });
+    },
     refresh() {
       const self = this;
 
@@ -82,7 +109,7 @@ export default {
     this.fields = [
       {
         label: this.$i18n.t("clone"),
-        key: "clone"
+        key: "clone",
       },
       {
         label: this.$i18n.t("name"),
@@ -98,7 +125,7 @@ export default {
       },
       {
         label: this.$i18n.t("remove"),
-        key: "remove"
+        key: "remove",
       },
     ];
 

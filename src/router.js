@@ -25,7 +25,7 @@ const router = new Router({
             }
         },
         {
-            path: "/datastore",
+            path: "/datastore/:id",
             name: "datastore",
             component: () => import(/* webpackChunkName: "datastore" */ "./views/DataStore.vue"),
             meta: {

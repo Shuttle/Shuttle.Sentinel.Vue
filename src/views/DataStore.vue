@@ -113,6 +113,7 @@ export default {
           providerName: this.form.providerName,
         })
         .then(() => {
+          self.$store.dispatch("requestSent");
           router.push("/datastores");
         })
         .finally(function () {
