@@ -31,6 +31,7 @@
     "profile-activation-failed": "Your profile could not be activated: {0}",
     "processor": "Processor",
     "provider-name": "Provider name",
+    "queue": "Queue",
     "queues": "Queues",
     "register": "Register",
     "register-provider": "Register using",

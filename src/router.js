@@ -25,7 +25,7 @@ const router = new Router({
             }
         },
         {
-            path: "/datastore/:id",
+            path: "/datastore/:id?",
             name: "datastore",
             component: () => import(/* webpackChunkName: "datastore" */ "./views/DataStore.vue"),
             meta: {
@@ -95,7 +95,7 @@ const router = new Router({
             }
         },
         {
-            path: "/queue",
+            path: "/queue/:id?",
             name: "queue",
             component: () => import(/* webpackChunkName: "queue" */ "./views/Queue.vue"),
             meta: {

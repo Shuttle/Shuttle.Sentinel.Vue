@@ -1,7 +1,11 @@
 body {
     font-family: Roboto, sans-serif, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-    margin: 8rem 0px;
     font-weight: 300;
+    margin-top: 5rem;
+}
+
+body.navbar-secondary {
+    margin-top: 8rem;
 }
 
 .navbar-brand > img {
@@ -12,7 +16,7 @@ body {
     background-color: $navbar-bg-color;
 }
 
-.navbar-secondary {
+nav.navbar-secondary {
     background-color: lighten($navbar-bg-color, 2%);
 }
 

@@ -24,6 +24,9 @@ export default new Vuex.Store({
         secondaryNavbarItems: state => {
             return state.secondaryNavbarItems;
         },
+        hasSecondaryNavbarItems: state => {
+            return state.secondaryNavbarItems.length > 0;
+        },
         theme: state => {
             return state.theme;
         }

@@ -71,7 +71,7 @@ export default {
       return this.$store.getters.authenticated;
     },
     hasSecondaryNavbarItems() {
-      return this.secondaryNavbarItems.length > 0;
+      return this.$store.getters.hasSecondaryNavbarItems;
     },
     secondaryNavbarItems() {
       return this.$store.getters.secondaryNavbarItems;

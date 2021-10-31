@@ -78,6 +78,13 @@ export default {
       localStorage.setItem("theme", this.$store.state.theme);
       document.documentElement.setAttribute("theme", this.$store.state.theme);
     },
+    "$store.state.secondaryNavbarItems": function () {
+      if (this.$store.getters.hasSecondaryNavbarItems) {
+        document.body.classList.add("navbar-secondary");
+      } else {
+        document.body.classList.remove("navbar-secondary");
+      }
+    },
   },
 };
 </script>

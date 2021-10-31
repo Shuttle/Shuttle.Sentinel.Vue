@@ -170,7 +170,7 @@ export default {
 
     self.$api
       .get("queues/" + self.$route.params.id)
-      .then(function (response) {
+      .then(response => {
         self.form.uri = response.data.uri;
         self.form.processor = response.data.processor;
         self.form.type = response.data.type;
