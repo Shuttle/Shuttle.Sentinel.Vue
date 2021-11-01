@@ -1,6 +1,13 @@
 <template>
   <div>
-    <s-title :text="$t('data-stores')" />
+    <s-title :text="$t('schedules')" />
+    <b-form-select
+      v-model="dataStoreId"
+      :options="dataStores"
+      value-field="id"
+      text-field="name"
+      @change="refresh"
+    ></b-form-select>
     <b-table
       class="mt-2"
       :items="items"
@@ -18,27 +25,13 @@
       <template #table-busy>
         <s-working />
       </template>
-      <template #cell(status)="row">
-        <b-badge :variant="heartbeatStatusVariant(row.heartbeatStatus)">{{
-          heartbeatStatusText(row.heartbeatStatus)
-        }}</b-badge>
-      </template>
       <template v-slot:cell(clone)="data">
         <b-button
           variant="outline-primary"
           @click="clone(data.item)"
           size="sm"
-          :disabled="!$access.hasPermission('sentinel://data-stores/manage')"
+          :disabled="!$access.hasPermission('sentinel://schedules/manage')"
           ><font-awesome-icon icon="clone"
-        /></b-button>
-      </template>
-      <template v-slot:cell(edit)="data">
-        <b-button
-          variant="outline-primary"
-          @click="edit(data.item)"
-          size="sm"
-          :disabled="!$access.hasPermission('sentinel://data-stores/manage')"
-          ><font-awesome-icon icon="edit"
         /></b-button>
       </template>
       <template v-slot:cell(remove)="data">
@@ -47,7 +40,7 @@
           v-b-modal.modal-confirmation
           size="sm"
           @click="selectItem(data.item)"
-          :disabled="!$access.hasPermission('sentinel://data-stores/manage')"
+          :disabled="!$access.hasPermission('sentinel://schedules/manage')"
         >
           <font-awesome-icon icon="trash-alt" />
         </b-button>
@@ -74,20 +67,19 @@ import Permissions from "../permissions";
 import router from "../router";
 
 export default {
-  name: "DataStores",
+  name: "Schedules",
   data() {
     return {
+      dataStoreId: null,
+      dataStores: [],
       items: [],
       fields: [],
       working: false,
     };
   },
   methods: {
-    edit(item) {
-      router.replace(`/datastore/${item.id}/edit`);
-    },
     clone(item) {
-      router.replace(`/datastore/${item.id}/clone`);
+      router.replace("/schedules/" + item.id);
     },
     selectItem(item) {
       this.selectedItem = item;
@@ -95,7 +87,7 @@ export default {
     remove() {
       const self = this;
 
-      this.$api.delete("datastores/" + self.selectedItem.id).then(function () {
+      this.$api.delete("schedules/" + self.selectedItem.id).then(function () {
         self.$store.dispatch("requestSent");
         self.refresh();
       });
@@ -103,10 +95,15 @@ export default {
     refresh() {
       const self = this;
 
+      if (!this.dataStoreId) {
+        self.working = false;
+        return;
+      }
+
       this.working = true;
 
       self.$api
-        .get("datastores")
+        .get("schedules/" + this.dataStoreId)
         .then(function (response) {
           self.items = response.data;
         })
@@ -120,31 +117,32 @@ export default {
 
     this.fields = [
       {
-        label: "",
+        label: this.$i18n.t("clone"),
         key: "clone",
-        thClass: "button",
       },
       {
-        label: "",
+        label: this.$i18n.t("edit"),
         key: "edit",
-        thClass: "button",
       },
       {
         label: this.$i18n.t("name"),
         key: "name",
       },
       {
-        label: this.$i18n.t("connection-string"),
-        key: "connectionString",
+        label: this.$i18n.t("inbox-work-queue-uri"),
+        key: "securedUri",
       },
       {
-        label: this.$i18n.t("provider-name"),
-        key: "providerName",
+        label: this.$i18n.t("cron-expression"),
+        key: "cronExpression",
       },
       {
-        label: "",
+        label: this.$i18n.t("next-notification"),
+        key: "nextNotification",
+      },
+      {
+        label: this.$i18n.t("remove"),
         key: "remove",
-        thClass: "button",
       },
     ];
 
@@ -159,11 +157,20 @@ export default {
       permission: Permissions.Manage.DataStores,
       icon: "plus-square",
       click() {
-        router.replace("/datastore");
+        router.replace("/schedule");
       },
     });
 
-    this.refresh();
+    this.working = true;
+
+    self.$api
+      .get("datastores")
+      .then(function (response) {
+        self.dataStores = response.data;
+      })
+      .finally(function () {
+        self.refresh();
+      });
   },
 };
 </script>

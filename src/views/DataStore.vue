@@ -1,6 +1,6 @@
 <template>
   <div>
-    <s-title :text="$t('data-store')" />
+    <s-title :text="$t('data-store') + ' (' + $t(action) + ')'" />
     <s-column type="sm">
       <b-form @submit="submit" v-if="show">
         <b-form-group :label="$t('name')" label-for="input-name">
@@ -14,7 +14,10 @@
             {{ $t("validation.required") }}
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group :label="$t('connection-string')" label-for="input-connection-string">
+        <b-form-group
+          :label="$t('connection-string')"
+          label-for="input-connection-string"
+        >
           <b-form-input
             id="input-connection-string"
             v-model="form.connectionString"
@@ -25,7 +28,10 @@
             {{ $t("validation.required") }}
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group :label="$t('provider-name')" label-for="input-provider-name">
+        <b-form-group
+          :label="$t('provider-name')"
+          label-for="input-provider-name"
+        >
           <b-form-input
             id="input-provider-name"
             v-model="form.providerName"
@@ -108,6 +114,7 @@ export default {
 
       self.$api
         .post("datastores", {
+          id: this.action === "edit" ? this.form.id : null,
           name: this.form.name,
           connectionString: this.form.connectionString,
           providerName: this.form.providerName,
@@ -123,15 +130,19 @@ export default {
   },
   beforeMount() {
     var self = this;
+    const id = self.$route.params.id;
 
-    if (!self.$route.params.id) {
-        return;
+    if (!id) {
+      return;
     }
+
+    this.form.id = id;
+    this.action = self.$route.params.action ?? "clone";
 
     this.working = true;
 
     self.$api
-      .get("datastores/" + self.$route.params.id)
+      .get("datastores/" + id)
       .then(function (response) {
         self.form.name = response.data.name;
         self.form.connectionString = response.data.connectionString;

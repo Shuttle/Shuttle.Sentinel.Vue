@@ -8,13 +8,13 @@ import ShuttleVue from 'shuttle-vue';
 import Vuelidate from 'vuelidate';
 import Multiselect from 'vue-multiselect'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleDown, faAngleUp, faCircleNotch, faClone, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faCircleNotch, faClone, faEdit, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import router from './router'
 import access from './access';
 import api from './api';
 
-library.add(faAngleDown, faAngleUp, faCircleNotch, faClone, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle);
+library.add(faAngleDown, faAngleUp, faCircleNotch, faClone, faEdit, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('multiselect', Multiselect);
