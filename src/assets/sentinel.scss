@@ -100,3 +100,7 @@ nav.navbar-secondary {
 th.button {
     width: 0;
 }
+
+.form-control.focus {
+    background-color: $input-focus-bg;
+}

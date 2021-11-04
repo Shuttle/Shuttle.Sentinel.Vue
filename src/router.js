@@ -110,6 +110,14 @@ const router = new Router({
                 permission: Permissions.View.Queues
             }
         },
+        {
+            path: "/schedule/:id?/:action?",
+            name: "schedule",
+            component: () => import(/* webpackChunkName: "schedule" */ "./views/Schedule.vue"),
+            meta: {
+                permission: Permissions.Manage.Schedule
+            }
+        },
     ]
 })
 

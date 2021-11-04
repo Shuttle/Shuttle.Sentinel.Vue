@@ -2,11 +2,10 @@ import Vue from 'vue';
 import store from './store';
 import App from './App.vue';
 import i18n from './i18n'
-import BootstrapVue from 'bootstrap-vue';
-import "vue-multiselect/dist/vue-multiselect.min.css";
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
+import "bootstrap-vue/dist/bootstrap-vue.css";
 import ShuttleVue from 'shuttle-vue';
 import Vuelidate from 'vuelidate';
-import Multiselect from 'vue-multiselect'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAngleDown, faAngleUp, faCircleNotch, faClone, faEdit, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -17,9 +16,9 @@ import api from './api';
 library.add(faAngleDown, faAngleUp, faCircleNotch, faClone, faEdit, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.component('multiselect', Multiselect);
 
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 Vue.use(ShuttleVue);
 Vue.use(Vuelidate);
 
