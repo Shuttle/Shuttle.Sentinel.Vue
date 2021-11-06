@@ -12,6 +12,7 @@
     "email-address": "E-mail address",
     "endpoints": "Endpoints",
     "forgot-password": "Forgot password",
+    "has-next-notification": "Specify next notification date/time?",
     "heartbeat-date": "Heartbeat date",
     "heartbeat-interval": "Heartbeat interval",
     "inbox-work-queue-uri": "Inbox work queue URI",
@@ -58,6 +59,10 @@
     "username": "Username",
     "user-required": "No users have been registered.  You will be registered as an administrator.",
     "view": "View",
+    "confirmation-remove": {
+        "title": "Confirmation",
+        "message": "Are you sure that you want to remove the selected item?"
+    },
     "exceptions": {
         "access-failure": "Could not initialize the `shuttle-access` module.  The back-end may not be available.",
         "register": "Could not register user.  Exception: {0}"
@@ -70,11 +75,9 @@
         "oauth-email-not-found": "No e-mail address was returned from the OAuth provider.  Please try again.",
         "email-not-registered": "The e-mail address '{email}' associated with the OAuth provider is not registered.",
         "password-reset-sent": "The e-mail with the password reset link has been sent.  Please check your e-mail and keep an eye on your junk/spam folder just in case.",
-        "request-sent": "The request has been submitted.  It may take a moment to process."
-    },
-    "validation": {
-        "required": "May not be empty.",
-        "email": "Must be an e-mail address."
+        "request-sent": "The request has been submitted.  It may take a moment to process.",
+        "fetching-data": "(fetching)",
+        "empty": "(empty)"
     },
     "navigation": {
         "dashboard": "Dashboard",
@@ -96,6 +99,9 @@
         "queues": "Queues",
         "schedules": "Schedules"
     },
+    "placeholders": {
+        "queue": "(enter/select the queue uri)"
+    },
     "statuses": {
         "health": {
             "up": "Up",
@@ -104,8 +110,9 @@
             "unknown": "Unknown"
         }
     },
-    "confirmation-remove": {
-        "title": "Confirmation",
-        "message": "Are you sure that you want to remove the selected item?"
+    "validation": {
+        "required": "May not be empty.",
+        "email": "Must be an e-mail address.",
+        "date-time": "Must be a valida date/time"
     }
 }

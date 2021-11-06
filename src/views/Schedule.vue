@@ -2,7 +2,7 @@
   <div>
     <s-title :text="$t('schedule') + ' (' + $t(action) + ')'" />
     <s-column type="sm">
-      <b-form @submit="submit" v-if="show">
+      <b-form autocomplete="off" @submit="submit" v-if="show">
         <b-form-group :label="$t('data-store')" label-for="input-data-store">
           <b-form-select
             id="input-data-store"
@@ -16,81 +16,94 @@
             {{ $t("validation.required") }}
           </b-form-invalid-feedback>
         </b-form-group>
-      </b-form>
-      <b-form-group :label="$t('name')" label-for="input-name">
-        <b-form-input
-          id="input-name"
-          v-model="form.name"
-          :state="validateState('name')"
-          class="mb-2"
-        ></b-form-input>
-        <b-form-invalid-feedback>
-          {{ $t("validation.required") }}
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <b-form-group
-        :label="$t('inbox-work-queue-uri')"
-        label-for="input-inbox-work-queue-uri"
-      >
-        <b-form-input
-          id="input-inbox-work-queue-uri"
-          v-model="form.inboxWorkQueueUri"
-          :state="validateState('inboxWorkQueueUri')"
-          class="mb-2"
-        ></b-form-input>
-        <b-form-invalid-feedback>
-          {{ $t("validation.required") }}
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <b-form-group
-        :label="$t('cron-expression')"
-        label-for="input-cron-expression"
-      >
-        <b-form-input
-          id="input-cron-expression"
-          v-model="form.cronExpression"
-          :state="validateState('cronExpression')"
-          class="mb-2"
-        ></b-form-input>
-        <b-form-invalid-feedback>
-          {{ $t("validation.required") }}
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <b-form-group
-        :label="$t('next-notification-date')"
-        label-for="input-next-notification-date"
-      >
-        <b-form-datepicker
-          id="input-next-notification-date"
-          v-model="form.nextNotificationDate"
-          :state="validateState('nextNotificationDate')"
-          class="mb-2"
-        ></b-form-datepicker>
-        <b-form-invalid-feedback>
-          {{ $t("validation.required") }} | {{ $t("validation.date") }}
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <div class="mt-2">
-        <b-button
-          class="float-right"
-          variant="primary"
-          type="submit"
-          :disabled="working"
+        <b-form-group :label="$t('name')" label-for="input-name">
+          <b-form-input
+            id="input-name"
+            v-model="form.name"
+            :state="validateState('name')"
+            class="mb-2"
+          ></b-form-input>
+          <b-form-invalid-feedback>
+            {{ $t("validation.required") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group
+          :label="$t('inbox-work-queue-uri')"
+          label-for="input-inbox-work-queue-uri"
         >
-          <font-awesome-icon
-            icon="circle-notch"
-            class="fa-spin mr-2"
-            v-if="working"
-          />
-          {{ $t("submit") }}
-        </b-button>
-      </div>
+          <s-queue v-model="form.inboxWorkQueueUri" />
+          <!-- <b-form-input
+            id="input-inbox-work-queue-uri"
+            v-model="form.inboxWorkQueueUri"
+            :state="validateState('inboxWorkQueueUri')"
+            class="mb-2"
+          ></b-form-input> -->
+          <b-form-invalid-feedback>
+            {{ $t("validation.required") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group
+          :label="$t('cron-expression')"
+          label-for="input-cron-expression"
+        >
+          <b-form-input
+            id="input-cron-expression"
+            v-model="form.cronExpression"
+            :state="validateState('cronExpression')"
+            class="mb-2"
+          ></b-form-input>
+          <b-form-invalid-feedback>
+            {{ $t("validation.required") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group :label="$t('next-notification')">
+          <b-form-checkbox
+            v-model="form.hasNextNotification"
+            name="hasNextNotification"
+          >
+            {{ $t("has-next-notification") }}
+          </b-form-checkbox>
+          <b-input-group>
+            <b-form-datepicker
+              :disabled="!form.hasNextNotification"
+              id="input-next-notification-date"
+              v-model="form.nextNotificationDate"
+              :state="validateState('nextNotificationDate')"
+              class="mb-2"
+            ></b-form-datepicker>
+            <b-form-timepicker
+              :disabled="!form.hasNextNotification"
+              id="input-next-notification-time"
+              v-model="form.nextNotificationTime"
+              :state="validateState('nextNotificationTime')"
+              class="mb-2"
+            ></b-form-timepicker>
+          </b-input-group>
+          <b-form-invalid-feedback>
+            {{ $t("validation.required") }} | {{ $t("validation.date-time") }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <div class="mt-2">
+          <b-button
+            class="float-right"
+            variant="primary"
+            type="submit"
+            :disabled="working"
+          >
+            <font-awesome-icon
+              icon="circle-notch"
+              class="fa-spin mr-2"
+              v-if="working"
+            />
+            {{ $t("submit") }}
+          </b-button>
+        </div>
+      </b-form>
     </s-column>
   </div>
 </template>
 
 <script>
-//import { required, date, datetime } from "vuelidate/lib/validators";
 import { required } from "vuelidate/lib/validators";
 import router from "../router";
 import moment from "moment";
@@ -105,15 +118,25 @@ export default {
       working: false,
       dataStores: [],
       form: {
+        hasNextNotification: true,
         dataStoreId: null,
         name: null,
         inboxWorkQueueUri: null,
         cronExpression: null,
         nextNotificationDate: now,
-        nextNotificationTime: now,
+        nextNotificationTime: moment(now).format("hh:mm:ss"),
       },
       show: true,
     };
+  },
+  computed: {
+    nextNotification() {
+      return moment(
+        moment(this.form.nextNotificationDate).format("YYYY/MM/DD") +
+          " " +
+          this.form.nextNotificationTime
+      );
+    },
   },
   validations() {
     return {
@@ -132,11 +155,17 @@ export default {
         },
         nextNotificationDate: {
           required,
-          //date,
+          date(value) {
+            return moment(value).isValid();
+          },
         },
         nextNotificationTime: {
           required,
-          //datetime,
+          time(value) {
+            return moment(
+              moment().format("YYYY/MM/DD") + " " + value
+            ).isValid();
+          },
         },
       },
     };
@@ -165,11 +194,7 @@ export default {
           name: this.form.name,
           inboxWorkQueueUri: this.inboxWorkQueueUri.name,
           cronExpression: this.form.cronExpression,
-          nextNotification: new moment(
-            this.form.nextNotificationDate +
-              " " +
-              new moment(this.form.nextNotificationTime).format("hh:mm:ss a")
-          ),
+          nextNotification: this.nextNotification,
         })
         .then(() => {
           self.$store.dispatch("requestSent");

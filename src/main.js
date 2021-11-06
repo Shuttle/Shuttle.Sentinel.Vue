@@ -2,6 +2,7 @@ import Vue from 'vue';
 import store from './store';
 import App from './App.vue';
 import i18n from './i18n'
+import "bootstrap";
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import ShuttleVue from 'shuttle-vue';
@@ -12,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import router from './router'
 import access from './access';
 import api from './api';
+import Queue from "./components/s-queue.vue";
 
 library.add(faAngleDown, faAngleUp, faCircleNotch, faClone, faEdit, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle);
 
@@ -26,6 +28,8 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$api = api;
 Vue.prototype.$access = access;
+
+Vue.component("s-queue", Queue);
 
 var vue = new Vue({
     store,
