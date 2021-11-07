@@ -2,13 +2,17 @@
   <div>
     <b-input-group>
       <b-form-input
-        v-model="value"
+        v-model="searchText"
         v-on:input="search"
         :placeholder="$t('placeholders.queue')"
         class="dropdown-toggle"
         aria-expanded="false"
         data-toggle="dropdown"
+        :state="state"
       ></b-form-input>
+      <b-form-invalid-feedback>
+        {{ $t("validation.required") }}
+      </b-form-invalid-feedback>
       <div class="dropdown-menu" ref="queues">
         <a class="dropdown-item" href="#" v-if="items.length === 0">{{
           $t("messages.empty")
@@ -32,19 +36,25 @@ export default {
   data() {
     return {
       working: false,
-      value: null,
+      searchText: '',
       items: [],
     };
   },
+  props: {
+    state: Boolean,
+    value: Object
+  },
   methods: {
     selectQueue(item) {
-      this.value = item.securedUri;
-      this.$emit("queueSelected", item);
+      this.searchText = item.securedUri;
+      this.$emit("input", item);
     },
     search() {
       const self = this;
 
-      if (!this.value || !this.value.trim()) {
+      this.$emit("input", null);
+
+      if (!this.searchText || !this.searchText.trim()) {
         self.items = [];
         return;
       }
@@ -52,10 +62,10 @@ export default {
       self.working = true;
 
       const params = new URLSearchParams();
-      params.append("match", this.value);
+      params.append("match", this.searchText);
 
       self.$api
-        .get("queues/uri", {params: params})
+        .get("queues/uri", { params: params })
         .then(function (response) {
           self.items = response.data;
           self.$refs.queues.classList.add("show");

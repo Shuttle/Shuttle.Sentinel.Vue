@@ -28,19 +28,14 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group
-          :label="$t('inbox-work-queue-uri')"
-          label-for="input-inbox-work-queue-uri"
+          :label="$t('inbox-work-queue')"
+          label-for="input-inbox-work-queue"
         >
-          <s-queue v-model="form.inboxWorkQueueUri" />
-          <!-- <b-form-input
-            id="input-inbox-work-queue-uri"
-            v-model="form.inboxWorkQueueUri"
-            :state="validateState('inboxWorkQueueUri')"
-            class="mb-2"
-          ></b-form-input> -->
-          <b-form-invalid-feedback>
-            {{ $t("validation.required") }}
-          </b-form-invalid-feedback>
+          <s-queue
+            id="input-inbox-work-queue"
+            v-model="form.inboxWorkQueue"
+            :state="validateState('inboxWorkQueue')"
+          />
         </b-form-group>
         <b-form-group
           :label="$t('cron-expression')"
@@ -121,7 +116,7 @@ export default {
         hasNextNotification: true,
         dataStoreId: null,
         name: null,
-        inboxWorkQueueUri: null,
+        inboxWorkQueue: null,
         cronExpression: null,
         nextNotificationDate: now,
         nextNotificationTime: moment(now).format("hh:mm:ss"),
@@ -147,7 +142,7 @@ export default {
         name: {
           required,
         },
-        inboxWorkQueueUri: {
+        inboxWorkQueue: {
           required,
         },
         cronExpression: {
@@ -190,11 +185,14 @@ export default {
 
       self.$api
         .post("schedules", {
+          dataStoreId: this.form.dataStoreId,
           id: this.action === "edit" ? this.form.id : null,
           name: this.form.name,
-          inboxWorkQueueUri: this.inboxWorkQueueUri.name,
+          inboxWorkQueueUri: this.form.inboxWorkQueue.uri,
           cronExpression: this.form.cronExpression,
-          nextNotification: this.nextNotification,
+          nextNotification: this.form.hasNextNotification
+            ? this.nextNotification
+            : null,
         })
         .then(() => {
           self.$store.dispatch("requestSent");

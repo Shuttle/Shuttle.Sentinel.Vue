@@ -15,6 +15,7 @@
     "has-next-notification": "Specify next notification date/time?",
     "heartbeat-date": "Heartbeat date",
     "heartbeat-interval": "Heartbeat interval",
+    "inbox-work-queue": "Inbox work queue",
     "inbox-work-queue-uri": "Inbox work queue URI",
     "ipv4-address": "IPv4 address",
     "login": "Login",

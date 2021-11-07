@@ -1,13 +1,19 @@
 <template>
   <div>
     <s-title :text="$t('schedules')" />
-    <b-form-select
-      v-model="dataStoreId"
-      :options="dataStores"
-      value-field="id"
-      text-field="name"
-      @change="refresh"
-    ></b-form-select>
+    <b-form-group :label="$t('data-store')" label-for="input-data-store">
+      <b-form-select
+        id="input-data-store"
+        v-model="dataStoreId"
+        :options="dataStores"
+        value-field="id"
+        text-field="name"
+        @change="refresh"
+      ></b-form-select>
+      <b-form-invalid-feedback>
+        {{ $t("validation.required") }}
+      </b-form-invalid-feedback>
+    </b-form-group>
     <b-table
       class="mt-2"
       :items="items"
@@ -32,6 +38,15 @@
           size="sm"
           :disabled="!$access.hasPermission('sentinel://schedules/manage')"
           ><font-awesome-icon icon="clone"
+        /></b-button>
+      </template>
+      <template v-slot:cell(edit)="data">
+        <b-button
+          variant="outline-primary"
+          @click="edit(data.item)"
+          size="sm"
+          :disabled="!$access.hasPermission('sentinel://data-stores/manage')"
+          ><font-awesome-icon icon="edit"
         /></b-button>
       </template>
       <template v-slot:cell(remove)="data">
@@ -78,8 +93,11 @@ export default {
     };
   },
   methods: {
+    edit(item) {
+      router.replace(`/datastore/${item.id}/edit`);
+    },
     clone(item) {
-      router.replace("/schedules/" + item.id);
+      router.replace(`/datastore/${item.id}/clone`);
     },
     selectItem(item) {
       this.selectedItem = item;
@@ -117,12 +135,14 @@ export default {
 
     this.fields = [
       {
-        label: this.$i18n.t("clone"),
+        label: "",
         key: "clone",
+        thClass: "button",
       },
       {
-        label: this.$i18n.t("edit"),
+        label: "",
         key: "edit",
+        thClass: "button",
       },
       {
         label: this.$i18n.t("name"),
@@ -141,8 +161,9 @@ export default {
         key: "nextNotification",
       },
       {
-        label: this.$i18n.t("remove"),
+        label: "",
         key: "remove",
+        thClass: "button",
       },
     ];
 
