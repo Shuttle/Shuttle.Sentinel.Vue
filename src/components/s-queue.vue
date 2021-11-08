@@ -36,17 +36,16 @@ export default {
   data() {
     return {
       working: false,
-      searchText: '',
+      searchText: "",
       items: [],
     };
   },
   props: {
     state: Boolean,
-    value: Object
+    value: Object,
   },
   methods: {
     selectQueue(item) {
-      this.searchText = item.securedUri;
       this.$emit("input", item);
     },
     search() {
@@ -73,6 +72,11 @@ export default {
         .finally(function () {
           self.working = false;
         });
+    },
+  },
+  watch: {
+    value(current) {
+      this.searchText = current.securedUri;
     },
   },
 };

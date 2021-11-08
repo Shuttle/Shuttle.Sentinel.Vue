@@ -94,10 +94,10 @@ export default {
   },
   methods: {
     edit(item) {
-      router.replace(`/datastore/${item.id}/edit`);
+      router.replace(`/schedule/${this.dataStoreId}/${item.id}/edit`);
     },
     clone(item) {
-      router.replace(`/datastore/${item.id}/clone`);
+      router.replace(`/schedule/${this.dataStoreId}/${item.id}/clone`);
     },
     selectItem(item) {
       this.selectedItem = item;
@@ -105,7 +105,7 @@ export default {
     remove() {
       const self = this;
 
-      this.$api.delete("schedules/" + self.selectedItem.id).then(function () {
+      this.$api.delete(`/schedules/${this.dataStoreId}/${this.selectedItem.id}`).then(function () {
         self.$store.dispatch("requestSent");
         self.refresh();
       });
@@ -121,7 +121,7 @@ export default {
       this.working = true;
 
       self.$api
-        .get("schedules/" + this.dataStoreId)
+        .get("schedules/search/" + this.dataStoreId)
         .then(function (response) {
           self.items = response.data;
         })

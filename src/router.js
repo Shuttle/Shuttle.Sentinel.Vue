@@ -111,7 +111,7 @@ const router = new Router({
             }
         },
         {
-            path: "/schedule/:id?/:action?",
+            path: "/schedule/:dataStoreId?/:id?/:action?",
             name: "schedule",
             component: () => import(/* webpackChunkName: "schedule" */ "./views/Schedule.vue"),
             meta: {

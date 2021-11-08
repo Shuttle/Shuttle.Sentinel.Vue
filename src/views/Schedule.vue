@@ -205,6 +205,7 @@ export default {
   },
   beforeMount() {
     var self = this;
+    const dataStoreId = self.$route.params.dataStoreId;
     const id = self.$route.params.id;
 
     this.working = true;
@@ -218,19 +219,24 @@ export default {
           return;
         }
 
-        this.form.id = id;
-        this.action = self.$route.params.action ?? "clone";
+        self.form.id = id;
+        self.action = self.$route.params.action ?? "clone";
 
-        return self.$api.get("datastores/" + id);
+        return self.$api.get(`schedules/${dataStoreId}/${id}`);
       })
       .then(function (response) {
         if (!response) {
           return;
         }
 
+        self.form.dataStoreId = response.data.dataStoreId;
         self.form.name = response.data.name;
+        self.form.inboxWorkQueue = {
+            uri: response.data.inboxWorkQueueUri,
+            securedUri: response.data.inboxWorkQueueUri
+        };
         self.form.cronExpression = response.data.cronExpression;
-        self.form.providerName = response.data.providerName;
+        self.form.nextNotification = response.data.nextNotification;
       })
       .finally(function () {
         self.working = false;
