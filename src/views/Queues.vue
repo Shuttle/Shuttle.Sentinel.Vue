@@ -2,6 +2,7 @@
   <div>
     <s-title :text="$t('queues')" />
     <b-table
+      ref="table"
       class="mt-2"
       :items="items"
       :fields="fields"
@@ -26,6 +27,25 @@
           :disabled="!$access.hasPermission('sentinel://queues/manage')"
           ><font-awesome-icon icon="clone"
         /></b-button>
+      </template>
+      <template v-slot:cell(edit)="data">
+        <b-button
+          variant="outline-primary"
+          @click="edit(data.item)"
+          size="sm"
+          :disabled="!$access.hasPermission('sentinel://queues/manage')"
+          ><font-awesome-icon icon="edit"
+        /></b-button>
+      </template>
+      <template #cell(toggleSecureUri)="data">
+        <b-button
+          variant="outline-primary"
+          @click="toggleSecuredUri(data.item)"
+          size="sm"
+          :class="data.item.toggleSecuredUriClass"
+        >
+          <font-awesome-icon :icon="data.item.toggleSecuredUriIcon" /></b-button
+        >
       </template>
       <template v-slot:cell(remove)="data">
         <b-button
@@ -70,6 +90,18 @@ export default {
     };
   },
   methods: {
+    toggleSecuredUri(item) {
+      item.secured = !item.secured;
+      item.toggleSecuredUriIcon = item.secured ? "eye" : "eye-slash";
+      item.displayUri = item.secured ? item.securedUri : item.uri;
+      this.$refs.table.refresh();
+    },
+    edit(item) {
+      router.replace(`/queue/${item.id}/edit`);
+    },
+    clone(item) {
+      router.replace(`/queue/${item.id}/clone`);
+    },
     selectItem(item) {
       this.selectedItem = item;
     },
@@ -90,6 +122,14 @@ export default {
         .get("queues")
         .then(function (response) {
           self.items = response.data;
+
+          self.items.forEach((item) => {
+            item.hasSecuredUri = item.uri !== item.securedUri;
+            item.displayUri = item.securedUri;
+            item.toggleSecuredUriIcon = "eye";
+            item.toggleSecuredUriClass = item.hasSecuredUri ? "" : "d-none";
+            item.secured = true;
+          });
         })
         .finally(function () {
           self.working = false;
@@ -101,12 +141,23 @@ export default {
 
     this.fields = [
       {
-        label: this.$i18n.t("clone"),
+        label: "",
         key: "clone",
+        thClass: "button",
+      },
+      {
+        label: "",
+        key: "edit",
+        thClass: "button",
+      },
+      {
+        label: "",
+        key: "toggleSecureUri",
+        thClass: "button",
       },
       {
         label: this.$i18n.t("uri"),
-        key: "uri",
+        key: "displayUri",
       },
       {
         label: this.$i18n.t("processor"),
@@ -117,8 +168,9 @@ export default {
         key: "type",
       },
       {
-        label: this.$i18n.t("remove"),
+        label: "",
         key: "remove",
+        thClass: "button",
       },
     ];
 

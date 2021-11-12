@@ -95,7 +95,7 @@ const router = new Router({
             }
         },
         {
-            path: "/queue/:id?",
+            path: "/queue/:id?/:action?",
             name: "queue",
             component: () => import(/* webpackChunkName: "queue" */ "./views/Queue.vue"),
             meta: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <s-title :text="$t('queue')" />
+    <s-title :text="$t('queue') + ' (' + $t(action) + ')'" />
     <s-column type="sm">
       <b-form @submit="submit" v-if="show">
         <b-form-group :label="$t('uri')" label-for="input-uri">
@@ -70,6 +70,7 @@ export default {
   name: "ListImport",
   data() {
     return {
+      action: "new",
       working: false,
       processorOptions: [
         {
@@ -160,17 +161,21 @@ export default {
     },
   },
   beforeMount() {
-    var self = this;
+    const self = this;
+    const id = self.$route.params.id;
 
-    if (!self.$route.params.id) {
+    if (!id) {
       return;
     }
+
+    self.action = self.$route.params.action ?? "clone";
 
     this.working = true;
 
     self.$api
-      .get("queues/" + self.$route.params.id)
-      .then(response => {
+      .get("queues/" + id)
+      .then((response) => {
+        self.id = response.data.id;
         self.form.uri = response.data.uri;
         self.form.processor = response.data.processor;
         self.form.type = response.data.type;
