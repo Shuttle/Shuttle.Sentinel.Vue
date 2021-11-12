@@ -15,6 +15,7 @@
       </b-form-invalid-feedback>
     </b-form-group>
     <b-table
+      ref="table"
       class="mt-2"
       :items="items"
       :fields="fields"
@@ -40,13 +41,14 @@
           ><font-awesome-icon icon="clone"
         /></b-button>
       </template>
-      <template v-slot:cell(edit)="data">
+      <template v-slot:cell(toggleSecureUri)="data">
         <b-button
           variant="outline-primary"
-          @click="edit(data.item)"
+          @click="toggleSecuredUri(data.item)"
           size="sm"
-          :disabled="!$access.hasPermission('sentinel://subscriptions/manage')"
-          ><font-awesome-icon icon="edit"
+          :class="data.item.toggleSecuredUriClass"
+        >
+          <font-awesome-icon :icon="data.item.toggleSecuredUriIcon"
         /></b-button>
       </template>
       <template v-slot:cell(remove)="data">
@@ -93,6 +95,12 @@ export default {
     };
   },
   methods: {
+    toggleSecuredUri(item) {
+      item.secured = !item.secured;
+      item.toggleSecuredUriIcon = item.secured ? "eye" : "eye-slash";
+      item.displayUri = item.secured ? item.securedUri : item.inboxWorkQueueUri;
+      this.$refs.table.refresh();
+    },
     clone(item) {
       this.$store.dispatch("addElement", {
         key: "subscription",
@@ -131,6 +139,14 @@ export default {
         .get("subscriptions/" + this.dataStoreId)
         .then(function (response) {
           self.items = response.data;
+
+          self.items.forEach((item) => {
+            item.hasSecuredUri = item.inboxWorkQueueUri !== item.securedUri;
+            item.displayUri = item.securedUri;
+            item.toggleSecuredUriIcon = "eye";
+            item.toggleSecuredUriClass = item.hasSecuredUri ? "" : "d-none";
+            item.secured = true;
+          });
         })
         .finally(function () {
           self.working = false;
@@ -147,12 +163,17 @@ export default {
         thClass: "button",
       },
       {
+        label: "",
+        key: "toggleSecureUri",
+        thClass: "button",
+      },
+      {
         label: this.$i18n.t("message-type"),
         key: "messageType",
       },
       {
         label: this.$i18n.t("inbox-work-queue-uri"),
-        key: "securedUri",
+        key: "displayUri",
       },
       {
         label: "",

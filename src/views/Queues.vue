@@ -37,7 +37,7 @@
           ><font-awesome-icon icon="edit"
         /></b-button>
       </template>
-      <template #cell(toggleSecureUri)="data">
+      <template v-slot:cell(toggleSecureUri)="data">
         <b-button
           variant="outline-primary"
           @click="toggleSecuredUri(data.item)"
