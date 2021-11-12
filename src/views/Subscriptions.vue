@@ -1,6 +1,6 @@
 <template>
   <div>
-    <s-title :text="$t('schedules')" />
+    <s-title :text="$t('subscriptions')" />
     <b-form-group :label="$t('data-store')" label-for="input-data-store">
       <b-form-select
         id="input-data-store"
@@ -36,7 +36,7 @@
           variant="outline-primary"
           @click="clone(data.item)"
           size="sm"
-          :disabled="!$access.hasPermission('sentinel://schedules/manage')"
+          :disabled="!$access.hasPermission('sentinel://subscriptions/manage')"
           ><font-awesome-icon icon="clone"
         /></b-button>
       </template>
@@ -45,7 +45,7 @@
           variant="outline-primary"
           @click="edit(data.item)"
           size="sm"
-          :disabled="!$access.hasPermission('sentinel://schedules/manage')"
+          :disabled="!$access.hasPermission('sentinel://subscriptions/manage')"
           ><font-awesome-icon icon="edit"
         /></b-button>
       </template>
@@ -55,7 +55,7 @@
           v-b-modal.modal-confirmation
           size="sm"
           @click="selectItem(data.item)"
-          :disabled="!$access.hasPermission('sentinel://schedules/manage')"
+          :disabled="!$access.hasPermission('sentinel://subscriptions/manage')"
         >
           <font-awesome-icon icon="trash-alt" />
         </b-button>
@@ -93,11 +93,12 @@ export default {
     };
   },
   methods: {
-    edit(item) {
-      router.replace(`/schedule/${this.dataStoreId}/${item.id}/edit`);
-    },
     clone(item) {
-      router.replace(`/schedule/${this.dataStoreId}/${item.id}/clone`);
+      this.$store.dispatch("addElement", {
+        key: "subscription",
+        data: item,
+      });
+      router.replace(`/subscription/${this.dataStoreId}/clone`);
     },
     selectItem(item) {
       this.selectedItem = item;
@@ -105,10 +106,16 @@ export default {
     remove() {
       const self = this;
 
-      this.$api.delete(`/schedules/${this.dataStoreId}/${this.selectedItem.id}`).then(function () {
-        self.$store.dispatch("requestSent");
-        self.refresh();
-      });
+      this.$api
+        .post(`/subscriptions/remove`, {
+          dataStoreId: this.form.dataStoreId,
+          messageType: this.form.messageType,
+          inboxWorkQueueUri: this.form.inboxWorkQueue.uri,
+        })
+        .then(function () {
+          self.$store.dispatch("requestSent");
+          self.refresh();
+        });
     },
     refresh() {
       const self = this;
@@ -121,7 +128,7 @@ export default {
       this.working = true;
 
       self.$api
-        .get("schedules/search/" + this.dataStoreId)
+        .get("subscriptions/" + this.dataStoreId)
         .then(function (response) {
           self.items = response.data;
         })
@@ -140,25 +147,12 @@ export default {
         thClass: "button",
       },
       {
-        label: "",
-        key: "edit",
-        thClass: "button",
-      },
-      {
-        label: this.$i18n.t("name"),
-        key: "name",
+        label: this.$i18n.t("message-type"),
+        key: "messageType",
       },
       {
         label: this.$i18n.t("inbox-work-queue-uri"),
         key: "securedUri",
-      },
-      {
-        label: this.$i18n.t("cron-expression"),
-        key: "cronExpression",
-      },
-      {
-        label: this.$i18n.t("next-notification"),
-        key: "nextNotification",
       },
       {
         label: "",
@@ -178,7 +172,7 @@ export default {
       permission: Permissions.Manage.DataStores,
       icon: "plus-square",
       click() {
-        router.replace("/schedule");
+        router.replace("/subscription");
       },
     });
 

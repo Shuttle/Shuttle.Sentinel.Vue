@@ -5,6 +5,7 @@ import access from './access';
 import api from './api';
 import router from './router'
 import i18n from './i18n';
+import Elements from './elements';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
         starting: true,
         working: false,
         alerts: new Alerts(),
+        elements: new Elements(),
         authenticated: false,
         secondaryNavbarItems: [],
         theme: localStorage.getItem('theme') || 'dark'
@@ -29,6 +31,9 @@ export default new Vuex.Store({
         },
         theme: state => {
             return state.theme;
+        },
+        element: state => key => {
+            return state.elements.get(key);
         }
     },
     mutations: {
@@ -57,6 +62,12 @@ export default new Vuex.Store({
             state.theme = theme;
 
             router.go();
+        },
+        ADD_ELEMENT: (state, element) => {
+            state.elements.add(element);
+        },
+        REMOVE_ELEMENT: (state, key) => {
+            state.elements.remove(key);
         },
     },
     actions: {
@@ -121,6 +132,16 @@ export default new Vuex.Store({
             commit('APPLY_THEME', {
                 theme
             });
+        },
+        addElement({ commit }, element) {
+            commit('ADD_ELEMENT', element);
+        },
+        popElement({ commit, getters }, key) {
+            var result = getters.element(key);
+
+            commit('REMOVE_ELEMENT', key)
+
+            return result;
         },
     }
 })

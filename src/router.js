@@ -103,19 +103,35 @@ const router = new Router({
             }
         },
         {
-            path: "/schedules",
-            name: "schedules",
-            component: () => import(/* webpackChunkName: "schedules" */ "./views/Schedules.vue"),
-            meta: {
-                permission: Permissions.View.Queues
-            }
-        },
-        {
             path: "/schedule/:dataStoreId?/:id?/:action?",
             name: "schedule",
             component: () => import(/* webpackChunkName: "schedule" */ "./views/Schedule.vue"),
             meta: {
-                permission: Permissions.Manage.Schedule
+                permission: Permissions.Manage.Schedules
+            }
+        },
+        {
+            path: "/schedules",
+            name: "schedules",
+            component: () => import(/* webpackChunkName: "schedules" */ "./views/Schedules.vue"),
+            meta: {
+                permission: Permissions.View.Schedules
+            }
+        },
+        {
+            path: "/subscription/:dataStoreId?/:action?",
+            name: "subscription",
+            component: () => import(/* webpackChunkName: "subscription" */ "./views/Subscription.vue"),
+            meta: {
+                permission: Permissions.Manage.Schedules
+            }
+        },
+        {
+            path: "/subscriptions",
+            name: "subscriptions",
+            component: () => import(/* webpackChunkName: "subscriptions" */ "./views/Subscriptions.vue"),
+            meta: {
+                permission: Permissions.View.Subscriptions
             }
         },
     ]
