@@ -1,30 +1,33 @@
 import axios from 'axios';
-import store from './store';
+import { useAlertStore } from '@/stores/alert';
+import { useSessionStore } from '@/stores/session';
 import configuration from './configuration';
-import access from './access';
 import router from './router';
 
-var api = axios.create({ baseURL: configuration.url });
+const api = axios.create({ baseURL: configuration.url });
+const alertStore = useAlertStore();
+const sessionStore = useSessionStore();
 
 api.interceptors.request.use(function (config) {
-    config.headers['access-sessiontoken'] = access.token;
+    config.headers['access-session-token'] = sessionStore.token;
 
     return config;
 });
 
 api.interceptors.response.use((response) => response, (error) => {
-    if (!!error.response && error.response.status == 401) {
-        router.push("login");
+    if (error.response.status == 401) {
+        router.push("signin");
 
         return error;
     }
 
-    store.dispatch('addAlert', {
-        message: (!!error.response  && !!error.response.data) ? error.response.data : error,
-        type: 'danger'
+    alertStore.add({
+        message: error.response.data || error.response.statusText || "(unknown communication/network error)",
+        variant: "danger",
+        name: "api-error"
     });
 
-    return error;
+    return Promise.reject(error);
 });
 
 export default api;

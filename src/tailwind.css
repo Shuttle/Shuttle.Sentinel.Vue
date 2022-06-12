@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .sv-title {
+        @apply font-semibold border-0 mb-2 p-0;
+    }
+    
+    .sv-strip {
+        @apply mb-4;
+    }
+}

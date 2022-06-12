@@ -1,26 +1,53 @@
 {
     "assembly-qualified-name": "Assembly qualified name",
+    "associations": "Associations",
     "base-directory": "Base directory",
     "cancel": "Cancel",
     "clone": "Clone",
+    "confirmation-remove": {
+        "title": "Confirmation",
+        "message": "Are you sure that you want to remove the selected item?"
+    },
     "connection-string": "Connection string",
     "cron-expression": "Cron expression",
     "data-stores": "Data stores",
     "data-store": "Data store",
     "dashboard": "Dashboard",
+    "dispatched": "Dispatched",
     "edit": "Edit",
     "email-address": "E-mail address",
     "endpoints": "Endpoints",
+    "exceptions": {
+        "session-initialize": "Your session has expired.  Please sign in again.",
+        "invalid-credentials": "Invalid credentials.",
+        "register": "Could not register user.  Exception: {0}"
+    },
     "forgot-password": "Forgot password",
+    "handled": "Handled",
     "has-next-notification": "Specify next notification date/time?",
+    "headers": "Headers",
     "heartbeat-date": "Heartbeat date",
     "heartbeat-interval": "Heartbeat interval",
     "inbox-work-queue": "Inbox work queue",
     "inbox-work-queue-uri": "Inbox work queue URI",
     "ipv4-address": "IPv4 address",
-    "login": "Login",
     "machine-name": "Machine name",
+    "manage": "Manage",
     "message-type": "Message type",
+    "message-types": "Message types",
+    "messages-text": "Messages",
+    "messages": {
+        "already-registered": "The e-mail address '{email}' is already registered.",
+        "register-request-sent": "The request to register e-mail address '{email}' has been submitted.  Please give it a moment to complete and then check your e-mail and keep an eye on your junk/spam folder just in case.",
+        "forgot-password": "We will send you an e-mail containing a link that you can click to reset your password.",
+        "no-items": "There are no items to display.",
+        "oauth-email-not-found": "No e-mail address was returned from the OAuth provider.  Please try again.",
+        "email-not-registered": "The e-mail address '{email}' associated with the OAuth provider is not registered.",
+        "password-reset-sent": "The e-mail with the password reset link has been sent.  Please check your e-mail and keep an eye on your junk/spam folder just in case.",
+        "request-sent": "The request has been submitted.  It may take a moment to process.",
+        "fetching-data": "(fetching)",
+        "empty": "(empty)"
+    },
     "name": "Name",
     "new": "New",
     "new-password": "New password",
@@ -32,6 +59,9 @@
     "password-mismatch": "Your new password does not match the confirmation password",
     "password-confirm": "Password (confirm)",
     "permission-required": "You do not have permission to access the requested route.",
+    "placeholders": {
+        "queue": "(enter/select the queue uri)"
+    },
     "profile": "Profile",
     "profile-activation": "Profile Activation",
     "profile-activating": "Please hold on while we activate your profile.",
@@ -49,7 +79,17 @@
     "schedules": "Schedules",
     "search": "Search",
     "send": "Send",
+    "sign-in": "Sign in",
+    "sign-out": "Sign out",
     "status": "Status",
+    "statuses": {
+        "health": {
+            "up": "Up",
+            "down": "Down",
+            "recovery": "Recovery",
+            "unknown": "Unknown"
+        }
+    },
     "submit": "Submit",
     "subscriptions": "Subscriptions",
     "subscription": "Subscription",
@@ -63,57 +103,6 @@
     "username": "Username",
     "user-required": "No users have been registered.  You will be registered as an administrator.",
     "view": "View",
-    "confirmation-remove": {
-        "title": "Confirmation",
-        "message": "Are you sure that you want to remove the selected item?"
-    },
-    "exceptions": {
-        "access-failure": "Could not initialize the `shuttle-access` module.  The back-end may not be available.",
-        "register": "Could not register user.  Exception: {0}"
-    },
-    "messages": {
-        "already-registered": "The e-mail address '{email}' is already registered.",
-        "register-request-sent": "The request to register e-mail address '{email}' has been submitted.  Please give it a moment to complete and then check your e-mail and keep an eye on your junk/spam folder just in case.",
-        "forgot-password": "We will send you an e-mail containing a link that you can click to reset your password.",
-        "no-items": "There are no items to display.",
-        "oauth-email-not-found": "No e-mail address was returned from the OAuth provider.  Please try again.",
-        "email-not-registered": "The e-mail address '{email}' associated with the OAuth provider is not registered.",
-        "password-reset-sent": "The e-mail with the password reset link has been sent.  Please check your e-mail and keep an eye on your junk/spam folder just in case.",
-        "request-sent": "The request has been submitted.  It may take a moment to process.",
-        "fetching-data": "(fetching)",
-        "empty": "(empty)"
-    },
-    "navigation": {
-        "dashboard": "Dashboard",
-        "endpoints": "Endpoints",
-        "message-types": {
-            "title": "Message types",
-            "associations": "Associations",
-            "dispatched": "Dispatched",
-            "handled": "Handled"
-        },
-        "messages": {
-            "title": "Messages",
-            "manage": "Manage",
-            "send": "Send",
-            "headers": "Headers"
-        },
-        "subscriptions": "Subscriptions",
-        "data-stores": "Data stores",
-        "queues": "Queues",
-        "schedules": "Schedules"
-    },
-    "placeholders": {
-        "queue": "(enter/select the queue uri)"
-    },
-    "statuses": {
-        "health": {
-            "up": "Up",
-            "down": "Down",
-            "recovery": "Recovery",
-            "unknown": "Unknown"
-        }
-    },
     "validation": {
         "required": "May not be empty.",
         "email": "Must be an e-mail address.",

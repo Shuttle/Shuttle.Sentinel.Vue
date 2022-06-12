@@ -3,72 +3,72 @@ import Permissions from '../permissions';
 var map = [
     {
         to: '/dashboard',
-        text: 'navigation.dashboard',
+        text: 'dashboard',
         permission: Permissions.View.Dashboard
     },
     {
         to: '/endpoints',
-        text: 'navigation.endpoints',
+        text: 'endpoints',
         permission: Permissions.View.Monitoring
     },
     {
-        text: 'navigation.message-types.title',
+        text: 'message-types',
         items: [
             {
                 to: '/messagetypeassociations',
-                text: 'navigation.message-types.associations',
+                text: 'associations',
                 permission: Permissions.Manage.Monitoring
             },
             {
                 to: '/messagetypesdispatched',
-                text: 'navigation.message-types.dispatched',
+                text: 'dispatched',
                 permission: Permissions.Manage.Monitoring
             },
             {
                 to: '/messagetypeshandled',
-                text: 'navigation.message-types.handled',
+                text: 'handled',
                 permission: Permissions.Manage.Monitoring
             }
         ]
     },
     {
-        text: 'navigation.messages.title',
+        text: 'messages-text',
         items: [
             {
                 to: '/messages',
-                text: 'navigation.messages.manage',
+                text: 'manage',
                 permission: Permissions.Manage.Messages
             },
             {
                 to: '/sendmessage',
-                text: 'navigation.messages.send',
+                text: 'send',
                 permission: Permissions.Manage.Messages
             },
             {
                 to: '/messageheaders',
-                text: 'navigation.messages.headers',
+                text: 'headers',
                 permission: Permissions.Manage.Messages
             }
         ]
     },
     {
         to: '/subscriptions',
-        text: 'navigation.subscriptions',
+        text: 'subscriptions',
         permission: Permissions.View.Subscriptions
     },
     {
         to: '/datastores',
-        text: 'navigation.data-stores',
+        text: 'data-stores',
         permission: Permissions.View.DataStores
     },
     {
         to: '/queues',
-        text: 'navigation.queues',
+        text: 'queues',
         permission: Permissions.View.Queues
     },
     {
         to: '/schedules',
-        text: 'navigation.schedules',
+        text: 'schedules',
         permission: Permissions.View.Schedules
     }
 ];

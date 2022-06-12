@@ -1,71 +1,53 @@
-import Vue from 'vue';
-import store from './store';
-import App from './App.vue';
-import i18n from './i18n'
-import "bootstrap";
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import ShuttleVue from 'shuttle-vue';
-import Vuelidate from 'vuelidate';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleDown, faAngleUp, faCircleNotch, faClone, faEdit, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import router from './router'
-import access from './access';
-import api from './api';
-import Queue from "./components/s-queue.vue";
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import './tailwind.css'
 
-library.add(faAngleDown, faAngleUp, faCircleNotch, faClone, faEdit, faExternalLinkAlt, faEye, faEyeSlash, faKey, faMoon, faHourglass, faSignOutAlt, faUser, faPlusSquare, faShieldAlt, faSyncAlt, faSun, faTimes, faTrashAlt, faUserCircle);
+import App from "./App.vue";
+import router from "./router";
+import { setupI18n, loadLocaleMessages } from "./i18n";
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+import ShuttleVue from 'shuttle-vue3';
+import "shuttle-vue3/dist/shuttle-vue3.css";
+import "shuttle-vue3/dist/variables.css";
+import "@/assets/tailwind.css";
 
-Vue.use(BootstrapVue);
-Vue.use(BootstrapVueIcons);
-Vue.use(ShuttleVue);
-Vue.use(Vuelidate);
+import { useAlertStore } from "@/stores/alert";
+import { useSessionStore } from "@/stores/session";
 
-Vue.config.productionTip = false;
+import TableEmpty from "@/components/TableEmpty.vue";
 
-Vue.prototype.$api = api;
-Vue.prototype.$access = access;
+const app = createApp(App);
 
-Vue.component("s-queue", Queue);
+const i18n = setupI18n({
+    locale: import.meta.env.VITE_APP_I18N_LOCALE,
+    fallbackLocale: import.meta.env.VITE_APP_I18N_FALLBACK_LOCALE,
+});
 
-var vue = new Vue({
-    store,
-    router,
-    i18n,
-    access,
-    render: h => h(App),
-}).$mount('#app');
+await loadLocaleMessages(i18n, "en");
 
-if (vue.$store.state.theme === "dark") {
-    require("@/assets/bootstrap-dark.scss");
-} else {
-    require("@/assets/bootstrap-light.scss");
+app.use(createPinia());
+app.use(i18n);
+app.use(router);
+app.use(ShuttleVue);
+
+app.component("TableEmpty", TableEmpty);
+
+const alertStore = useAlertStore();
+const sessionStore = useSessionStore();
+
+await sessionStore.initialize()
+    .catch(error => {
+        alertStore.add({
+            message: i18n.global.t("exceptions.session-initialize", { error: error.toString() }),
+            variant: "danger",
+            name: "session-initialize"
+        });
+
+        router.push({ path: "/signin" });
+    });
+
+if (window.location.pathname === "/") {
+    router.push({ path: sessionStore.authenticated ? "/dashboard" : "/signin" });
 }
 
-access.initialize()
-    .then(() => {
-        if (access.loginStatus === 'logged-in') {
-            store.commit('AUTHENTICATED');
-        }
-    })
-    .catch(function () {
-        store.dispatch('addAlert', {
-            message: i18n.t('exceptions.access-failure'),
-            type: 'danger',
-            expire: false
-        });
-    })
-    .finally(function () {
-        store.commit('STARTED');
-
-        if (window.location.pathname !== "/") {
-            router.push({ path: window.location.pathname + window.location.search });
-        } else {
-            if (access.loginStatus !== 'logged-in') {
-                router.push({ path: "/login" });
-            }
-        }
-    });
+app.mount("#app");

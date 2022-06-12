@@ -1,90 +1,35 @@
+<script setup>
+import Navbar from "@/components/Navbar.vue";
+import { RouterView } from "vue-router";
+import { useAlertStore } from "@/stores/alert";
+import { useConfirmationStore } from "@/stores/confirmation";
+
+var alertStore = useAlertStore();
+var confirmationStore = useConfirmationStore();
+</script>
+
 <template>
-  <div id="app">
-    <s-navigation />
-    <div style="top: 5em; position: absolute"></div>
-    <s-alerts :alerts="alerts" v-on:removed="removeAlert" class="m-2" />
-    <s-working v-if="starting" />
-    <div class="container-fluid">
-      <div class="row row-offcanvas row-offcanvas-left">
-        <div id="application-content" class="main col-sm-12 col-md-12">
-          <router-view></router-view>
-        </div>
-      </div>
+    <Navbar />
+    <Alerts v-if="alertStore.alerts.length" :alerts="alertStore.alerts"
+        :sv-class="{ 'sv-alerts': 'mx-4 mt-2 pt-2', 'sv-alert': 'mb-2' }" @remove="alertStore.remove" />
+    <div class="p-4">
+        <RouterView v-slot="{ Component, route }">
+            <transition name="route" mode="out-in">
+                <component :is="Component" :key="route.fullpath"></component>
+            </transition>
+        </RouterView>
     </div>
-    <footer class="footer p-2">
-      <div class="container-fluid text-center">
-        <div v-if="debugging">
-          <div class="d-none d-xl-block font-weight-bold">X-LARGE (XL)</div>
-          <div class="d-none d-lg-block d-xl-none font-weight-bold">
-            LARGE (LG)
-          </div>
-          <div class="d-none d-md-block d-lg-none font-weight-bold">
-            MEDIUM (M)
-          </div>
-          <div class="d-none d-sm-block d-md-none font-weight-bold">
-            SMALL (SM)
-          </div>
-          <div class="d-block d-sm-none alert font-weight-bold">
-            X-SMALL (Default)
-          </div>
+    <Dialog :isOpen="confirmationStore.isOpen" :setIsOpen="confirmationStore.setIsOpen" title="Confirmation"
+        message="Are you sure that you would like to delete the selected item(s)?">
+        <div class="flex flex-row items-center justify-end mt-4">
+            <Button variant="danger" class="mr-2 w-20 justify-center"
+                @click="confirmationStore.confirmed()">Yes</Button>
+            <Button variant="secondary" class="w-20 justify-center"
+                @click="confirmationStore.setIsOpen(false)">Cancel</Button>
         </div>
-        <p class="m-0">Copyright (c) 2020 Sentinel</p>
-      </div>
-    </footer>
-  </div>
+    </Dialog>
 </template>
 
-<script>
-import configuration from "@/configuration";
-import Navigation from "./components/s-navigation.vue";
-
-export default {
-  name: "app",
-  data() {
-    return {
-      darkMode: false,
-    };
-  },
-  components: {
-    "s-navigation": Navigation,
-  },
-  computed: {
-    debugging() {
-      return configuration.debugging();
-    },
-    alerts() {
-      return this.$store.state.alerts.messages;
-    },
-    starting() {
-      return this.$store.state.starting;
-    },
-  },
-  methods: {
-    removeAlert(alert) {
-      this.$store.commit("REMOVE_ALERT", alert);
-    },
-  },
-  mounted() {
-    document.body.classList.add("app-background");
-
-    let theme = localStorage.getItem("theme") || "dark";
-
-    this.$store.commit("APPLY_THEME", {
-      theme,
-    });
-  },
-  watch: {
-    "$store.state.theme": function () {
-      localStorage.setItem("theme", this.$store.state.theme);
-      document.documentElement.setAttribute("theme", this.$store.state.theme);
-    },
-    "$store.state.secondaryNavbarItems": function () {
-      if (this.$store.getters.hasSecondaryNavbarItems) {
-        document.body.classList.add("navbar-secondary");
-      } else {
-        document.body.classList.remove("navbar-secondary");
-      }
-    },
-  },
-};
-</script>
+<style>
+@import "@/assets/base.css";
+</style>
