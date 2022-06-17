@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useSessionStore } from "@/stores/session";
 import { useAlertStore } from "@/stores/alert";
+import Permissions from "@/permissions";
 
 export let messages = {
     insufficientPermission: "You do not have permission to access the requested view.  Please contact your system administrator if you require access.",
@@ -13,6 +14,22 @@ const router = createRouter({
             path: "/dashboard",
             name: "dashboard",
             component: () => import('../views/Dashboard.vue')
+        },
+        {
+            path: "/endpoints",
+            name: "endpoints",
+            component: () => import('../views/Endpoints.vue'),
+            meta: {
+                permission: Permissions.View.Endpoints
+            }
+        },
+        {
+            path: "/queues",
+            name: "queues",
+            component: () => import('../views/Queues.vue'),
+            meta: {
+                permission: Permissions.View.Queues
+            }
         },
         {
             path: '/signin',
@@ -32,7 +49,8 @@ router.beforeEach(async (to, from, next) => {
     if (!!to.meta.permission && !sessionStore.hasPermission(to.meta.permission)) {
         useAlertStore().add({
             message: messages.insufficientPermission,
-            variant: "info"
+            variant: "info",
+            name: "insufficient-permission"
         })
 
         return false;

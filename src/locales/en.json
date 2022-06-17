@@ -93,6 +93,7 @@
     "submit": "Submit",
     "subscriptions": "Subscriptions",
     "subscription": "Subscription",
+    "table-empty": "(no results)",
     "token-login": "Login",
     "token-login-working": "Please hang on a while the system logs you in.",
     "token-login-successful": "You have been successfully logged in.",

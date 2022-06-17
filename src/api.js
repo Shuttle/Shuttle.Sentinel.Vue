@@ -4,12 +4,12 @@ import { useSessionStore } from '@/stores/session';
 import configuration from './configuration';
 import router from './router';
 
-const api = axios.create({ baseURL: configuration.url });
+const api = axios.create({ baseURL: configuration.sentinel.url });
 const alertStore = useAlertStore();
 const sessionStore = useSessionStore();
 
 api.interceptors.request.use(function (config) {
-    config.headers['access-session-token'] = sessionStore.token;
+    config.headers['Authorization'] = `access-session-token ${sessionStore.token}`;
 
     return config;
 });

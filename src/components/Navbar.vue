@@ -5,7 +5,7 @@
             <Navbar>
                 <template #start>
                     <div class="flex flex-row items-center mr-2">
-                        <div class="font-bold text-orange-500 mt-[2px]">Shuttle.Access</div>
+                        <div class="font-bold text-orange-500 mt-[2px]">Shuttle.Sentinel</div>
                     </div>
                 </template>
                 <template #navigation>
