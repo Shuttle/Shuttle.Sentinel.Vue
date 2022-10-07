@@ -42,29 +42,34 @@ const fields = useSecureTableFields([
         name: "status",
     },
     {
-        text: t("machineName"),
+        text: t("machine-name"),
         name: "machineName",
     },
     {
-        text: t("baseDirectory"),
+        text: t("base-directory"),
         name: "baseDirectory",
     },
     {
-        text: t("assemblyQualifiedName"),
-        name: "assemblyQualifiedName",
-    },
-    {
-        text: t("ipv4Address"),
+        text: t("ipv4-address"),
         name: "ipv4Address",
     },
     {
-        text: t("heartbeatDate"),
+        text: t("heartbeat-date"),
         name: "heartbeatDate",
     },
     {
-        text: t("heartbeatInterval"),
+        text: t("heartbeat-interval"),
         name: "heartbeatInterval",
     },
+    {
+        text: t("date-started"),
+        name: "dateStarted",
+    },
+    {
+        text: t("date-stopped"),
+        name: "dateStopped",
+    },
+
 ]);
 
 const items = ref([]);

@@ -35,31 +35,13 @@ const busy = ref();
 const fields = useSecureTableFields([
     {
         text: "",
-        name: "clone",
-        thClass: "w-1",
-        permission: Permissions.Manage.DataStores
-    },
-    {
-        text: "",
-        name: "edit",
-        thClass: "w-1",
-        permission: Permissions.Manage.DataStores
-    },
-    {
-        text: "",
-        name: "toggleSecureUri",
-        thClass: "w-1",
-        permission: Permissions.Manage.DataStores
-    },
-    {
-        text: "",
         name: "remove",
         thClass: "w-1",
         permission: Permissions.Manage.DataStores
     },
     {
         text: t("uri"),
-        name: "displayUri",
+        name: "uri",
     },
     {
         text: t("processor"),
