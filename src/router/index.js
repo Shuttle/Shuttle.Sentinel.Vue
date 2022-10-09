@@ -60,6 +60,14 @@ const router = createRouter({
             name: 'sign-in',
             component: () => import('../views/SignIn.vue')
         },
+        {
+            path: "/subscriptions",
+            name: "subscriptions",
+            component: () => import('../views/Subscriptions.vue'),
+            meta: {
+                permission: Permissions.View.Subscriptions
+            }
+        },
     ],
 });
 
