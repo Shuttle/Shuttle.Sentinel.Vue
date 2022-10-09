@@ -20,7 +20,7 @@ var map = [
                 permission: Permissions.Manage.Monitoring
             },
             {
-                to: '/messagetypesdispatched',
+                to: '/message-types/dispatched',
                 text: 'dispatched',
                 permission: Permissions.Manage.Monitoring
             },

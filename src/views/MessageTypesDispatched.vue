@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Title>{{ $t("message-type-associations") }}</Title>
+        <Title>{{ $t("message-types-dispatched") }}</Title>
         <Strip>
             <Button :icon="RefreshIcon" size="sm" @click="refresh"></Button>
         </Strip>
@@ -31,12 +31,12 @@ const fields = useSecureTableFields([
         name: "environmentName",
     },
     {
-        text: t("message-type-handled"),
-        name: "messageTypeHandled",
+        text: t("message-type"),
+        name: "messageType",
     },
     {
-        text: t("message-type-dispatched"),
-        name: "messageTypeDispatched",
+        text: t("recipient-inbox-work-queue-uri"),
+        name: "recipientInboxWorkQueueUriSecured",
     },
     {
         text: t("endpoint-count"),

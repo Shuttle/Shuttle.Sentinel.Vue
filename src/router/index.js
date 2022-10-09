@@ -32,6 +32,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/message-types/dispatched",
+            name: "message-type-dispatched",
+            component: () => import('../views/MessageTypesDispatched.vue'),
+            meta: {
+                permission: Permissions.View.Monitoring
+            }
+        },
+        {
             path: "/queues",
             name: "queues",
             component: () => import('../views/Queues.vue'),
