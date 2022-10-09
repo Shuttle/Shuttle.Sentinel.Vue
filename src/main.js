@@ -19,6 +19,7 @@ import TableEmpty from "@/components/TableEmpty.vue";
 const app = createApp(App);
 
 const i18n = setupI18n({
+    legacy: false,
     locale: import.meta.env.VITE_APP_I18N_LOCALE,
     fallbackLocale: import.meta.env.VITE_APP_I18N_FALLBACK_LOCALE,
 });

@@ -93,6 +93,7 @@
             "unknown": "Unknown"
         }
     },
+    "stopped": "Stopped",
     "submit": "Submit",
     "subscriptions": "Subscriptions",
     "subscription": "Subscription",
