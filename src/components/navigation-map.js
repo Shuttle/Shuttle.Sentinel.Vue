@@ -25,7 +25,7 @@ var map = [
                 permission: Permissions.Manage.Monitoring
             },
             {
-                to: '/messagetypeshandled',
+                to: '/message-types/handled',
                 text: 'handled',
                 permission: Permissions.Manage.Monitoring
             }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Title>{{ $t("message-types-dispatched") }}</Title>
+        <Title>{{ $t("message-types-handled") }}</Title>
         <Strip>
             <Button :icon="RefreshIcon" size="sm" @click="refresh"></Button>
         </Strip>
@@ -35,10 +35,6 @@ const fields = useSecureTableFields([
         name: "messageType",
     },
     {
-        text: t("recipient-inbox-work-queue-uri"),
-        name: "recipientInboxWorkQueueUriSecured",
-    },
-    {
         text: t("endpoint-count"),
         name: "endpointCount",
     },
@@ -50,7 +46,7 @@ const refresh = () => {
     busy.value = true;
 
     api
-        .get("messagetypesdispatched")
+        .get("messagetypeshandled")
         .then(function (response) {
             if (!response || !response.data) {
                 return;

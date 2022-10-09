@@ -40,6 +40,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/message-types/handled",
+            name: "message-type-handled",
+            component: () => import('../views/MessageTypesHandled.vue'),
+            meta: {
+                permission: Permissions.View.Monitoring
+            }
+        },
+        {
             path: "/queues",
             name: "queues",
             component: () => import('../views/Queues.vue'),
