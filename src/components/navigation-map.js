@@ -15,7 +15,7 @@ var map = [
         text: 'message-types',
         items: [
             {
-                to: '/messagetypeassociations',
+                to: '/message-types/associations',
                 text: 'associations',
                 permission: Permissions.Manage.Monitoring
             },

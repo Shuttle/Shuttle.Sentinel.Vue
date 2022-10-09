@@ -19,6 +19,7 @@
     "edit": "Edit",
     "email-address": "E-mail address",
     "endpoints": "Endpoints",
+    "endpoint-count": "Endpoint count",
     "exceptions": {
         "session-initialize": "Your session has expired.  Please sign in again.",
         "invalid-credentials": "Invalid credentials.",
@@ -37,7 +38,11 @@
     "machine-name": "Machine name",
     "manage": "Manage",
     "message-type": "Message type",
+    "message-type-associations": "Message type associations",
+    "message-type-dispatched": "Message type dispatched",
+    "message-type-handled": "Message type handled",
     "message-types": "Message types",
+    "message-types-handled": "Message types handled",
     "messages-text": "Messages",
     "messages": {
         "already-registered": "The e-mail address '{email}' is already registered.",

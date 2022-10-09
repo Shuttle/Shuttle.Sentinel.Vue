@@ -20,7 +20,15 @@ const router = createRouter({
             name: "endpoints",
             component: () => import('../views/Endpoints.vue'),
             meta: {
-                permission: Permissions.View.Endpoints
+                permission: Permissions.View.Monitoring
+            }
+        },
+        {
+            path: "/message-types/associations",
+            name: "message-type-associations",
+            component: () => import('../views/MessageTypeAssociations.vue'),
+            meta: {
+                permission: Permissions.View.Monitoring
             }
         },
         {
