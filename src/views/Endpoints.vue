@@ -113,6 +113,10 @@ const fields = useSecureTableFields([
         name: "status",
     },
     {
+        text: t("assembly-qualified-name"),
+        name: "entryAssemblyQualifiedName",
+    },
+    {
         text: t("environment"),
         name: "environmentName",
     },
