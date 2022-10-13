@@ -37,7 +37,7 @@ const fields = useSecureTableFields([
         text: "",
         name: "remove",
         thClass: "w-1",
-        permission: Permissions.Manage.DataStores
+        permission: Permissions.Manage.Queues
     },
     {
         text: t("uri"),

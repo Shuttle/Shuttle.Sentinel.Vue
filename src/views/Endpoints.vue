@@ -5,11 +5,11 @@
             <Button :icon="RefreshIcon" size="sm" @click="refresh"></Button>
             <Listbox v-model="refreshInterval" :options="refreshIntervals" class="w-20" />
         </Strip>
-        <Table :fields="fields" :items="items" :busy="busy" striped>
+        <Table :fields="fields" :items="items" striped>
             <template #item(status)="data">
                 <component v-if="isRunning(data.item)" :is="heartbeatStatusIcon(data.item.heartbeatStatus)"
                     :class="heartbeatStatusIconClasses(data.item.heartbeatStatus)" />
-                <span v-else class="border-md border-solid border rounded-md p-0.5 m-0.5 text-xs text-red-800">{{
+                <span v-else class="border-md rounded-md p-1 m-0.5 text-[.75rem] bg-red-800 text-gray-300">{{
                 $t("stopped").toUpperCase() }}</span>
             </template>
             <template #busy>
@@ -137,6 +137,11 @@ const fields = useSecureTableFields([
         name: "transientInstance"
     },
     {
+        text: t("heartbeat-timestamp"),
+        name: "heartbeatTimestamp",
+        formatter: useDateTimeFormatter,
+    },
+    {
         text: t("date-started"),
         name: "dateStarted",
         formatter: useDateTimeFormatter,
@@ -151,8 +156,6 @@ const fields = useSecureTableFields([
 const items = ref([]);
 
 const refresh = () => {
-    busy.value = true;
-
     api
         .get("endpoints")
         .then(function (response) {
@@ -181,6 +184,8 @@ const remove = (item) => {
 }
 
 onMounted(() => {
+    busy.value = true;
+
     refresh();
 })
 </script>

@@ -57,20 +57,10 @@ var map = [
         permission: Permissions.View.Subscriptions
     },
     {
-        to: '/datastores',
-        text: 'data-stores',
-        permission: Permissions.View.DataStores
-    },
-    {
         to: '/queues',
         text: 'queues',
         permission: Permissions.View.Queues
     },
-    {
-        to: '/schedules',
-        text: 'schedules',
-        permission: Permissions.View.Schedules
-    }
 ];
 
 export default map;

@@ -109,6 +109,7 @@
     "token-login-working": "Please hang on a while the system logs you in.",
     "token-login-successful": "You have been successfully logged in.",
     "token-login-failed": "You could not be logged in.  Please try again.",
+    "transient-instance": "Transient",
     "type": "Type",
     "url": "URL",
     "uri": "URI",
