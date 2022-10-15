@@ -24,6 +24,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/logentries",
+            name: "logentries",
+            component: () => import('../views/LogEntries.vue'),
+            meta: {
+                permission: Permissions.View.Monitoring
+            }
+        },
+        {
             path: "/message-types/associations",
             name: "message-type-associations",
             component: () => import('../views/MessageTypeAssociations.vue'),

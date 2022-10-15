@@ -12,6 +12,11 @@ var map = [
         permission: Permissions.View.Monitoring
     },
     {
+        to: '/logentries',
+        text: 'log-entries',
+        permission: Permissions.View.Monitoring
+    },
+    {
         text: 'message-types',
         items: [
             {
