@@ -26,7 +26,7 @@
     "pinia": "^2.0.23",
     "postcss-cli": "^10.0.0",
     "shuttle-guard": "^1.0.1",
-    "shuttle-vue3": "^0.0.72",
+    "shuttle-vue3": "^0.0.73",
     "vue": "^3.2.40",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.0.12"

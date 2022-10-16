@@ -166,7 +166,6 @@ const refresh = () => {
             items.value = response.data;
         })
         .finally(function () {
-            busy.value = false;
             poll();
         });
 }

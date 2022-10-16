@@ -1,13 +1,18 @@
 <template>
     <div>
-        <div class="flex flex-col sm:flex-row gap-2 items-stretch">
-            <div v-for="item in items"
-                class="group flex flex-col items-center justify-center border border-solid border-[color:rgb(var(--sv-border-primary))] rounded-lg p-2 w-full cursor-pointer hover:bg-[color:rgb(var(--sv-bg-primary--hover))] active:bg-[color:rgb(var(--sv-bg-primary--active))]"
-                @click="click(item)">
-                <div class="text-2xl font-bold text-[color:rgb(var(--sv-text-title-primary))] group-hover:text-[color:rgb(var(--sv-text-fg-primary--hover))]">{{ item.title }}</div>
-                <div class="text-xl font-semibold">{{ item.value }}</div>
-            </div>
-        </div>
+        <Strip>
+            <Listbox v-model="refreshInterval" :options="refreshIntervals" class="w-20" />
+            <Listbox v-model="displayDuration" :options="displayDurations" class="w-56" />
+            <Button :icon="RefreshIcon" size="sm" @click="refresh"></Button>
+        </Strip>
+        <Table :fields="fields" :items="messageTypeMetrics" striped>
+            <template #busy>
+                <Busy />
+            </template>
+            <template #empty>
+                <TableEmpty />
+            </template>
+        </Table>
     </div>
 </template>
 
@@ -15,28 +20,104 @@
 import api from "@/api";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { RefreshIcon } from "@heroicons/vue/outline";
+import { useSecureTableFields } from "@/composables/useSecureTableFields";
 
 const { t } = useI18n({ useScope: 'global' });
-const router = useRouter();
 
-const items = ref([]);
+const messageTypeMetrics = ref([]);
+const refreshInterval = ref(5);
+const displayDuration = ref(15);
+let timeout = undefined;
 
-const click = (item) => {
-    router.push({ name: item.route })
+const poll = () => {
+    if (timeout) {
+        clearTimeout(timeout);
+    }
+
+    if (refreshInterval.value === 0)
+    {
+        return;
+    }
+
+    timeout = setTimeout(() => {
+        refresh();
+    }, refreshInterval.value * 1000);
 }
 
-const addItem = (title, value, route) => {
-    items.value.push({ title: title, value: value, route: route });
-}
+const refreshIntervals = [
+    { text: 'none', value: 0 },
+    { text: '5s', value: 5 },
+    { text: '10s', value: 10 },
+    { text: '15s', value: 15 },
+    { text: '30s', value: 30 },
+]
+
+const displayDurations = [
+    { text: t("display-last-5-minutes"), value: 5 },
+    { text: t("display-last-15-minutes"), value: 15 },
+    { text: t("display-last-30-minutes"), value: 30 },
+    { text: t("display-last-60-minutes"), value: 60 },
+    { text: t("display-last-24-hours"), value: 1440 }
+]
+
+const fields = useSecureTableFields([
+    {
+        text: t("message-type"),
+        name: "messageType",
+        sortable: true,
+    },
+    {
+        text: t("environment"),
+        name: "environmentName",
+    },
+    {
+        text: t("count"),
+        name: "count",
+        reverse: true,
+        sortable: true,
+        tdClass: "text-right",
+    },
+    {
+        text: t("total-execution-duration"),
+        name: "totalExecutionDuration",
+        reverse: true,
+        sortable: true,
+        tdClass: "text-right",
+    },
+    {
+        text: t("fastest-execution-duration"),
+        name: "fastestExecutionDuration",
+        reverse: true,
+        sortable: true,
+        tdClass: "text-right",
+    },
+    {
+        text: t("slowest-execution-duration"),
+        name: "slowestExecutionDuration",
+        reverse: true,
+        sortable: true,
+        tdClass: "text-right",
+    },
+    {
+        text: t("average-execution-duration"),
+        name: "averageExecutionDuration",
+        reverse: true,
+        sortable: true,
+        tdClass: "text-right",
+    },
+]);
 
 const refresh = () => {
-    // api.get("statistics/dashboard")
-    //     .then(response => {
-    //         addItem(t("permissions"), response.data.permissionCount, "permissions");
-    //         addItem(t("identities"), response.data.identityCount, "identities");
-    //         addItem(t("roles"), response.data.roleCount, "roles");
-    //     })
+    api.post("dashboard/statistics", {
+        startDate: new Date(Date.now() - displayDuration.value * 60000)
+    })
+        .then(response => {
+            messageTypeMetrics.value = response.data.messageTypeMetrics;
+        })
+        .finally(function () {
+            poll();
+        });
 }
 
 onMounted(() => {
