@@ -26,6 +26,7 @@ import { onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { SearchIcon } from "@heroicons/vue/outline";
 import { useSecureTableFields } from "@/composables/useSecureTableFields";
+import { useDateTimeFormatter } from "@/composables/useDateFormatter";
 
 const { t } = useI18n({ useScope: 'global' });
 const busy = ref();
@@ -49,6 +50,11 @@ const fields = useSecureTableFields([
     },
     {
         text: t("endpoint"),
+    },
+    {
+        text: t("date-logged"),
+        name: "dateLogged",
+        formatter: useDateTimeFormatter,
     },
     {
         text: t("log-level"),
