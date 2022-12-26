@@ -56,6 +56,14 @@ const router = createRouter({
             }
         },
         {
+            path: "/messages",
+            name: "messages",
+            component: () => import('../views/Messages.vue'),
+            meta: {
+                permission: Permissions.Manage.Messages
+            }
+        },
+        {
             path: "/queues",
             name: "queues",
             component: () => import('../views/Queues.vue'),
